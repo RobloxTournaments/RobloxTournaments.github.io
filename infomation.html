@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>RbxTournaments Launcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* makes it feel more like an application window */
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            background: #0a0a14;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* EXACT SAME BUBBLE BACKGROUND AS INDEX.HTML */
+        .bg-bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(255, 45, 45, 0.07) 0%, transparent 70%);
+            animation: bubbleFloat 18s ease-in-out infinite;
+            filter: blur(40px);
+        }
+        @keyframes bubbleFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+            25% { transform: translate(80px, -60px) scale(1.2); opacity: 0.8; }
+            50% { transform: translate(-40px, -120px) scale(0.9); opacity: 0.4; }
+            75% { transform: translate(60px, 40px) scale(1.15); opacity: 0.7; }
+        }
+
+        /* MAIN LAUNCHER CARD (the "fake launcher" window) */
+        .launcher-window {
+            position: relative;
+            z-index: 20;
+            width: 92%;
+            max-width: 520px;
+            background: rgba(18, 18, 31, 0.96);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 45, 45, 0.35);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 45, 45, 0.15), 0 0 40px rgba(255, 45, 45, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: floatWindow 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .launcher-window:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 45, 45, 0.4), 0 0 55px rgba(255, 45, 45, 0.3);
+        }
+        @keyframes floatWindow {
+            0% { opacity: 0; transform: scale(0.92) translateY(25px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* window header (title bar with fake buttons) */
+        .window-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(8, 8, 18, 0.5);
+            border-radius: 28px 28px 0 0;
+        }
+        .window-title {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -0.3px;
+        }
+        .window-title .logo-red {
+            color: #ff2d2d;
+            text-shadow: 0 0 12px rgba(255, 45, 45, 0.7);
+        }
+        .window-title .normal {
+            color: white;
+        }
+        .fake-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .win-btn {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .win-btn.close {
+            background: #ff5f56;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .win-btn.minimize {
+            background: #ffbd2e;
+        }
+        .win-btn.maximize {
+            background: #27c93f;
+        }
+        .win-btn:hover {
+            filter: brightness(1.1);
+            transform: scale(1.12);
+            box-shadow: 0 0 8px rgba(255,255,240,0.5);
+        }
+
+        /* main content inside launcher */
+        .launcher-content {
+            padding: 32px 28px 38px;
+            text-align: center;
+        }
+        .launcher-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #1e1e30, #12121f);
+            border-radius: 22px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,45,45,0.3);
+        }
+        .launcher-icon svg {
+            width: 42px;
+            height: 42px;
+            filter: drop-shadow(0 0 6px rgba(255,45,45,0.5));
+        }
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff, #ffa2a2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(255,45,45,0.2);
+        }
+        .info-text {
+            color: #b0b0cc;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+        .code-area {
+            background: #07070f;
+            border-radius: 28px;
+            padding: 8px 16px;
+            margin: 18px 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 1px solid rgba(255, 45, 45, 0.35);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.02);
+            transition: all 0.2s;
+        }
+        .code-area:focus-within {
+            border-color: #ff5e5e;
+            box-shadow: 0 0 0 3px rgba(255,45,45,0.2), 0 0 20px rgba(255,45,45,0.2);
+        }
+        .code-input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            width: 100%;
+            outline: none;
+            padding: 12px 5px;
+        }
+        .code-input::placeholder {
+            color: #4a4a66;
+            font-weight: 400;
+            font-size: 0.9rem;
+            letter-spacing: normal;
+        }
+        .send-btn {
+            background: rgba(255, 45, 45, 0.12);
+            border: 1.5px solid #ff2d2d;
+            color: #ff4d4d;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 8px 20px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+        }
+        .send-btn:hover {
+            background: #ff2d2d;
+            color: white;
+            box-shadow: 0 0 20px rgba(255,45,45,0.7);
+            transform: scale(1.02);
+        }
+        .send-btn:active {
+            transform: scale(0.96);
+        }
+        .fake-status {
+            margin-top: 25px;
+            font-size: 0.75rem;
+            color: #7a7a9a;
+            background: rgba(0,0,0,0.4);
+            padding: 8px 14px;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+        }
+        .fake-status .dot {
+            width: 8px;
+            height: 8px;
+            background: #27c93f;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 6px #27c93f;
+            animation: pulseGreen 1.6s infinite;
+        }
+        @keyframes pulseGreen {
+            0% { opacity: 0.6; transform: scale(1);}
+            100% { opacity: 1; transform: scale(1.2);}
+        }
+        .note-text {
+            font-size: 0.68rem;
+            color: #5a5a7a;
+            margin-top: 18px;
+            font-weight: 400;
+        }
+        /* fallback to match original style */
+        .no-header-footer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            visibility: hidden;
+        }
+        /* add little glow to match branding */
+        .glow-line {
+            width: 70px;
+            height: 2px;
+            background: #ff2d2d;
+            margin: 6px auto 0;
+            border-radius: 10px;
+            box-shadow: 0 0 8px #ff2d2d;
+        }
+        @media (max-width: 550px) {
+            .launcher-content {
+                padding: 24px 20px 30px;
+            }
+            .code-area {
+                flex-wrap: wrap;
+                justify-content: center;
+                border-radius: 32px;
+                padding: 12px;
+            }
+            .send-btn {
+                width: 100%;
+                text-align: center;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+        /* subtle background noise like index vibe */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 40%, rgba(255,45,45,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-bubbles" id="bgBubbles"></div>
+
+    <!-- THE FAKE LAUNCHER WINDOW / BOX -->
+    <div class="launcher-window">
+        <div class="window-bar">
+            <div class="window-title">
+                <span class="normal">Roblox</span><span class="logo-red">Tournaments</span>
+            </div>
+            <div class="fake-buttons">
+                <div class="win-btn minimize" id="fakeMinimizeBtn"></div>
+                <div class="win-btn maximize" id="fakeMaximizeBtn"></div>
+                <div class="win-btn close" id="fakeCloseBtn"></div>
+            </div>
+        </div>
+
+        <div class="launcher-content">
+            <div class="launcher-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#ff2d2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255,45,45,0.15)"/>
+                    <path d="M2 17L12 22L22 17" stroke="#ff2d2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <path d="M2 12L12 17L22 12" stroke="#ff2d2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <circle cx="12" cy="12" r="1.5" fill="#ff2d2d" stroke="none"/>
+                </svg>
+            </div>
+            <h2>LAUNCHER AUTH</h2>
+            <div class="info-text">🔐 Device verification required</div>
+            <div class="code-area">
+                <input type="text" class="code-input" id="authCodeInput" placeholder="● ● ● ● ● ●" maxlength="12" autocomplete="off">
+                <button class="send-btn" id="sendCodeBtn">✔ SEND CODE</button>
+            </div>
+            <div class="fake-status">
+                <span class="dot"></span>
+                <span id="statusMessage">Ready to connect</span>
+            </div>
+            <div class="glow-line"></div>
+            <div class="note-text">
+                ⚡ Simulated launcher | No backend required
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Recreate floating background bubbles exactly like index.html
+            const bgContainer = document.getElementById('bgBubbles');
+            if (bgContainer) {
+                for (let i = 0; i < 8; i++) {
+                    const bubble = document.createElement('div');
+                    bubble.classList.add('bg-bubble');
+                    const size = Math.random() * 380 + 180;
+                    bubble.style.width = size + 'px';
+                    bubble.style.height = size + 'px';
+                    bubble.style.left = Math.random() * 90 + '%';
+                    bubble.style.top = Math.random() * 90 + '%';
+                    bubble.style.animationDelay = Math.random() * 18 + 's';
+                    bubble.style.animationDuration = Math.random() * 24 + 12 + 's';
+                    bgContainer.appendChild(bubble);
+                }
+            }
+
+            // Get elements for fake window interactions
+            const fakeMinimize = document.getElementById('fakeMinimizeBtn');
+            const fakeMaximize = document.getElementById('fakeMaximizeBtn');
+            const fakeClose = document.getElementById('fakeCloseBtn');
+            const launcherWindow = document.querySelector('.launcher-window');
+            const sendBtn = document.getElementById('sendCodeBtn');
+            const codeInput = document.getElementById('authCodeInput');
+            const statusSpan = document.getElementById('statusMessage');
+
+            // fake minimize: shrink animation + transform (just for show)
+            if (fakeMinimize) {
+                fakeMinimize.addEventListener('click', () => {
+                    if (!launcherWindow) return;
+                    launcherWindow.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s';
+                    launcherWindow.style.transform = 'scale(0.92) translateY(12px)';
+                    launcherWindow.style.opacity = '0';
+                    setTimeout(() => {
+                        launcherWindow.style.transform = '';
+                        launcherWindow.style.opacity = '';
+                        launcherWindow.style.transition = '';
+                        // just reset to original state -> restore animation
+                        launcherWindow.style.animation = 'none';
+                        launcherWindow.offsetHeight; // reflow
+                        launcherWindow.style.animation = 'floatWindow 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        // update status message for fun
+                        statusSpan.innerHTML = 'Window restored ⚡';
+                        setTimeout(() => {
+                            if (statusSpan) statusSpan.innerHTML = 'Ready to connect';
+                        }, 1500);
+                    }, 200);
+                });
+            }
+
+            // fake maximize: simulate fullscreen pulse (just visual)
+            if (fakeMaximize) {
+                fakeMaximize.addEventListener('click', () => {
+                    if (!launcherWindow) return;
+                    launcherWindow.style.transition = 'all 0.2s ease';
+                    launcherWindow.style.transform = 'scale(1.02)';
+                    launcherWindow.style.boxShadow = '0 0 0 2px rgba(255,45,45,0.6), 0 35px 80px black';
+                    setTimeout(() => {
+                        launcherWindow.style.transform = '';
+                        launcherWindow.style.boxShadow = '';
+                        statusSpan.innerHTML = 'Maximized view ✨';
+                        setTimeout(() => {
+                            if (statusSpan) statusSpan.innerHTML = 'Ready to connect';
+                        }, 1300);
+                    }, 280);
+                });
+            }
+
+            // fake close: show a "disconnected" effect and reset (no actual page navigation)
+            if (fakeClose) {
+                fakeClose.addEventListener('click', () => {
+                    if (!launcherWindow) return;
+                    launcherWindow.style.transition = 'opacity 0.2s, transform 0.2s';
+                    launcherWindow.style.opacity = '0';
+                    launcherWindow.style.transform = 'scale(0.96)';
+                    statusSpan.innerHTML = 'Session closed • click to relaunch';
+                    // Create a temporary overlay message / after 0.6s restart the window state
+                    const tempMessage = document.createElement('div');
+                    tempMessage.innerText = '⚠️ Launcher session closed — click anywhere to restart';
+                    tempMessage.style.position = 'fixed';
+                    tempMessage.style.bottom = '30px';
+                    tempMessage.style.left = '50%';
+                    tempMessage.style.transform = 'translateX(-50%)';
+                    tempMessage.style.background = '#12121fcc';
+                    tempMessage.style.backdropFilter = 'blur(16px)';
+                    tempMessage.style.padding = '12px 24px';
+                    tempMessage.style.borderRadius = '60px';
+                    tempMessage.style.color = '#ffbaba';
+                    tempMessage.style.fontSize = '0.8rem';
+                    tempMessage.style.fontWeight = '500';
+                    tempMessage.style.border = '1px solid #ff2d2d';
+                    tempMessage.style.zIndex = '999';
+                    tempMessage.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
+                    tempMessage.style.pointerEvents = 'none';
+                    document.body.appendChild(tempMessage);
+                    
+                    const restartHandler = () => {
+                        launcherWindow.style.opacity = '1';
+                        launcherWindow.style.transform = 'scale(1)';
+                        launcherWindow.style.transition = '';
+                        statusSpan.innerHTML = 'Ready to connect';
+                        if (tempMessage && tempMessage.remove) tempMessage.remove();
+                        document.removeEventListener('click', restartHandler);
+                        document.removeEventListener('keydown', restartHandler);
+                    };
+                    setTimeout(() => {
+                        document.addEventListener('click', restartHandler, { once: true });
+                        document.addEventListener('keydown', restartHandler, { once: true });
+                    }, 400);
+                });
+            }
+
+            // send code logic: interactive simulation
+            function simulateCodeVerification(code) {
+                if (!code || code.trim() === "") {
+                    statusSpan.innerHTML = '❌ Please enter a code';
+                    statusSpan.style.color = '#ff8a8a';
+                    setTimeout(() => {
+                        if (statusSpan) {
+                            statusSpan.innerHTML = 'Ready to connect';
+                            statusSpan.style.color = '';
+                        }
+                    }, 1800);
+                    return false;
+                }
+                // pretend to send code
+                statusSpan.innerHTML = '⏳ Sending secure handshake ...';
+                statusSpan.style.color = '#ffb85e';
+                sendBtn.disabled = true;
+                sendBtn.style.opacity = '0.7';
+                sendBtn.innerText = '...';
+                
+                setTimeout(() => {
+                    // fake response after delay
+                    const isValid = code.length >= 3; // any non-empty code passes (makes it satisfying)
+                    if (isValid) {
+                        statusSpan.innerHTML = '✅ Code accepted! Launcher unlocked.';
+                        statusSpan.style.color = '#a5f7b0';
+                        // additional little effect: input border glow
+                        const codeArea = document.querySelector('.code-area');
+                        if (codeArea) {
+                            codeArea.style.borderColor = '#3eff6e';
+                            codeArea.style.boxShadow = '0 0 0 2px rgba(62, 255, 110, 0.3)';
+                            setTimeout(() => {
+                                if (codeArea) {
+                                    codeArea.style.borderColor = '';
+                                    codeArea.style.boxShadow = '';
+                                }
+                            }, 1000);
+                        }
+                        // show success message and animate
+                        const successMsg = document.createElement('div');
+                        successMsg.innerText = '✓ Tournament launcher ready • redirecting...';
+                        successMsg.style.position = 'fixed';
+                        successMsg.style.bottom = '20%';
+                        successMsg.style.left = '50%';
+                        successMsg.style.transform = 'translateX(-50%)';
+                        successMsg.style.background = '#101018dd';
+                        successMsg.style.backdropFilter = 'blur(20px)';
+                        successMsg.style.padding = '12px 28px';
+                        successMsg.style.borderRadius = '40px';
+                        successMsg.style.fontSize = '0.85rem';
+                        successMsg.style.fontWeight = '600';
+                        successMsg.style.color = '#fff';
+                        successMsg.style.border = '1px solid #3eff6e';
+                        successMsg.style.zIndex = '1000';
+                        successMsg.style.fontFamily = "'Space Grotesk', monospace";
+                        successMsg.style.pointerEvents = 'none';
+                        document.body.appendChild(successMsg);
+                        setTimeout(() => {
+                            if (successMsg && successMsg.remove) successMsg.remove();
+                        }, 2000);
+                        
+                        setTimeout(() => {
+                            // just reset status & button after fake launch
+                            statusSpan.innerHTML = '🚀 Launcher active • tournament mode';
+                            statusSpan.style.color = '#e0e0ff';
+                            sendBtn.disabled = false;
+                            sendBtn.style.opacity = '1';
+                            sendBtn.innerText = '✔ SEND CODE';
+                            codeInput.value = '';
+                            // make status reset after a little while
+                            setTimeout(() => {
+                                if (statusSpan) {
+                                    statusSpan.innerHTML = 'Ready to connect';
+                                    statusSpan.style.color = '';
+                                }
+                            }, 2800);
+                        }, 1200);
+                    } else {
+                        statusSpan.innerHTML = '⚠️ Invalid verification code';
+                        statusSpan.style.color = '#ff7b72';
+                        sendBtn.disabled = false;
+                        sendBtn.style.opacity = '1';
+                        sendBtn.innerText = '✔ SEND CODE';
+                        setTimeout(() => {
+                            if (statusSpan) {
+                                statusSpan.innerHTML = 'Ready to connect';
+                                statusSpan.style.color = '';
+                            }
+                        }, 1700);
+                    }
+                }, 800);
+                return true;
+            }
+
+            function handleSendCode() {
+                const code = codeInput.value.trim();
+                simulateCodeVerification(code);
+            }
+
+            if (sendBtn) {
+                sendBtn.addEventListener('click', handleSendCode);
+            }
+            if (codeInput) {
+                codeInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleSendCode();
+                    }
+                });
+                // subtle focus effect
+                codeInput.addEventListener('focus', () => {
+                    const parent = codeInput.closest('.code-area');
+                    if (parent) parent.style.borderColor = '#ff5e5e';
+                });
+                codeInput.addEventListener('blur', () => {
+                    const parent = codeInput.closest('.code-area');
+                    if (parent) parent.style.borderColor = 'rgba(255, 45, 45, 0.35)';
+                });
+            }
+
+            // optional: random placeholder effect
+            const placeholders = ['XXXXXX', 'LAUNCH-CODE', 'RBX-TOURNEY', 'ENTER KEY'];
+            let idx = 0;
+            if (codeInput) {
+                setInterval(() => {
+                    if (document.activeElement !== codeInput && codeInput.value === '') {
+                        codeInput.placeholder = placeholders[idx % placeholders.length];
+                        idx++;
+                    }
+                }, 2800);
+                codeInput.placeholder = 'XXXXXX';
+            }
+
+            // make sure that no header/footer or extra navigation appears, we already have a clean body
+            // background bubbles fully match index vibe.
+            console.log('FAKE LAUNCHER PAGE | inspired by RbxTournaments');
+        })();
+    </script>
+</body>
+</html>
