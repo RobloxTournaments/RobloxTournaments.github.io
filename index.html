@@ -24,6 +24,7 @@
             --surface: #12121f;
             --surface2: #161628;
             --header-bg: rgba(10, 10, 20, 0.88);
+            --footer-bg: #080812;
             --text: #f0f0f8;
             --text-dim: #b0b0c8;
             --text-bright: #ffffff;
@@ -192,6 +193,7 @@
             flex-shrink: 0;
             white-space: nowrap;
             padding-right: 16px;
+            text-decoration: none;
         }
         .logo {
             font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
@@ -278,7 +280,7 @@
         .lang-dropdown {
             position: absolute;
             top: 110%;
-            right: 0;
+            left: 0;
             background: var(--surface2);
             border: 1px solid var(--border);
             border-radius: var(--radius-sm);
@@ -714,7 +716,7 @@
         }
 
         .footer {
-            background: var(--surface);
+            background: var(--footer-bg);
             border-top: 1px solid var(--border);
             padding: 38px 24px 32px;
             text-align: center;
@@ -873,9 +875,9 @@
 
     <header class="header fade-in" id="header">
         <div class="header-inner">
-            <a href="/" class="logo-group" data-translate-key="logo" data-translate-attr="href" data-translate-href="/">
+            <a href="/" class="logo-group">
                 <span class="logo"><span>Roblox</span><span class="logo-red">Tournaments</span></span>
-                <span class="github-badge" data-translate-key="githubBadge">
+                <span class="github-badge">
                     <svg viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
                     </svg>
@@ -886,14 +888,13 @@
             <div class="header-right">
                 <div class="lang-selector" id="langSelector">
                     <button class="lang-btn" id="langBtn">
-                        <span id="langFlag">🇩🇪</span>
                         <span id="langLabel">Deutsch</span>
                         <span class="arrow">▾</span>
                     </button>
                     <div class="lang-dropdown" id="langDropdown">
-                        <div class="lang-option active" data-lang="de">🇩🇪 Deutsch</div>
-                        <div class="lang-option" data-lang="en">🇬🇧 English</div>
-                        <div class="lang-option" data-lang="fr">🇫🇷 Français</div>
+                        <div class="lang-option active" data-lang="de">Deutsch</div>
+                        <div class="lang-option" data-lang="en">English</div>
+                        <div class="lang-option" data-lang="fr">Français</div>
                     </div>
                 </div>
                 <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
@@ -1015,15 +1016,15 @@
 
     <footer class="footer fade-in" id="footer">
         <div class="footer-inner">
-            <a href="/" class="footer-logo" data-translate-key="footerLogo"><span>Roblox</span><span class="logo-red">Tournaments</span></a>
+            <a href="/" class="footer-logo"><span>Roblox</span><span class="logo-red">Tournaments</span></a>
             <div class="footer-glow-line"></div>
-            <div class="footer-links" data-translate-key="footerLinks">
+            <div class="footer-links">
                 <a href="/" class="footer-link">Home</a>
                 <a href="/download" class="footer-link">Download</a>
                 <a href="/tournaments" class="footer-link" style="color: var(--accent); text-shadow: 0 0 12px var(--accent-glow);">Tournaments</a>
                 <a href="/information" class="footer-link">Information</a>
             </div>
-            <p class="footer-copy" data-translate-key="footerCopy">&copy; 2026 Roblox Tournaments — Not affiliated with Roblox Corporation.</p>
+            <p class="footer-copy">&copy; 2026 Roblox Tournaments — Not affiliated with Roblox Corporation.</p>
         </div>
     </footer>
 
@@ -1188,11 +1189,7 @@
                     step4launcher: 'launcher',
                     step4pre2: 'After 1-2 minutes the bot will connect to your screen and watch you play to count the points and make sure you don\'t cheat with using Xeno or any other cheating software.',
                     step5: 'Join the tournament and play!',
-                    competeButton: 'Compete in a Tournament',
-                    footerLogo: 'Roblox<span class="logo-red">Tournaments</span>',
-                    footerCopy: '&copy; 2026 Roblox Tournaments — Not affiliated with Roblox Corporation.',
-                    githubBadge: '.github.io',
-                    footerLinksTemplate: '<a href="/" class="footer-link">Home</a><a href="/download" class="footer-link">Download</a><a href="/tournaments" class="footer-link" style="color: var(--accent); text-shadow: 0 0 12px var(--accent-glow);">Tournaments</a><a href="/information" class="footer-link">Information</a>'
+                    competeButton: 'Compete in a Tournament'
                 },
                 en: {
                     navHome: 'Home',
@@ -1220,11 +1217,7 @@
                     step4launcher: 'launcher',
                     step4pre2: 'After 1-2 minutes the bot will connect to your screen and watch you play to count the points and make sure you don\'t cheat with using Xeno or any other cheating software.',
                     step5: 'Join the tournament and play!',
-                    competeButton: 'Compete in a Tournament',
-                    footerLogo: 'Roblox<span class="logo-red">Tournaments</span>',
-                    footerCopy: '&copy; 2026 Roblox Tournaments — Not affiliated with Roblox Corporation.',
-                    githubBadge: '.github.io',
-                    footerLinksTemplate: '<a href="/" class="footer-link">Home</a><a href="/download" class="footer-link">Download</a><a href="/tournaments" class="footer-link" style="color: var(--accent); text-shadow: 0 0 12px var(--accent-glow);">Tournaments</a><a href="/information" class="footer-link">Information</a>'
+                    competeButton: 'Compete in a Tournament'
                 },
                 fr: {
                     navHome: 'Accueil',
@@ -1252,11 +1245,7 @@
                     step4launcher: 'launcher',
                     step4pre2: 'Après 1-2 minutes, le bot se connectera à votre écran et vous regardera jouer pour compter les points et s\'assurer que vous ne trichez pas avec Xeno ou autre.',
                     step5: 'Rejoignez le tournoi et jouez!',
-                    competeButton: 'Participer à un Tournoi',
-                    footerLogo: 'Roblox<span class="logo-red">Tournaments</span>',
-                    footerCopy: '&copy; 2026 Roblox Tournaments — Non affilié à Roblox Corporation.',
-                    githubBadge: '.github.io',
-                    footerLinksTemplate: '<a href="/" class="footer-link">Accueil</a><a href="/download" class="footer-link">Télécharger</a><a href="/tournaments" class="footer-link" style="color: var(--accent); text-shadow: 0 0 12px var(--accent-glow);">Tournois</a><a href="/information" class="footer-link">Informations</a>'
+                    competeButton: 'Participer à un Tournoi'
                 }
             };
 
@@ -1269,38 +1258,9 @@
                 elements.forEach(function(el) {
                     var key = el.getAttribute('data-translate-key');
                     if (t[key] !== undefined) {
-                        if (key === 'footerLinks' || key === 'footerLinksTemplate') {
-                            el.innerHTML = t[key];
-                        } else if (key === 'footerLogo') {
-                            el.innerHTML = t[key];
-                        } else if (key === 'footerCopy') {
-                            el.innerHTML = t[key];
-                        } else if (key === 'githubBadge') {
-                            var svg = el.querySelector('svg');
-                            if (svg) {
-                                el.innerHTML = '';
-                                el.appendChild(svg);
-                                el.appendChild(document.createTextNode(' ' + t[key]));
-                            } else {
-                                el.textContent = t[key];
-                            }
-                        } else {
-                            el.innerHTML = t[key];
-                        }
+                        el.innerHTML = t[key];
                     }
                 });
-                var footerLinksContainer = document.querySelector('.footer-links');
-                if (footerLinksContainer && t.footerLinksTemplate) {
-                    footerLinksContainer.innerHTML = t.footerLinksTemplate;
-                }
-                var logoGroup = document.querySelector('.logo-group .logo');
-                if (logoGroup && t.footerLogo) {
-                    logoGroup.innerHTML = t.footerLogo;
-                }
-                var footerLogoEl = document.querySelector('.footer-logo');
-                if (footerLogoEl && t.footerLogo) {
-                    footerLogoEl.innerHTML = t.footerLogo;
-                }
             }
 
             function switchLanguage(lang) {
@@ -1315,13 +1275,12 @@
 
             var langBtn = document.getElementById('langBtn');
             var langDropdown = document.getElementById('langDropdown');
-            var langFlag = document.getElementById('langFlag');
             var langLabel = document.getElementById('langLabel');
 
             var langDisplay = {
-                de: { flag: '🇩🇪', label: 'Deutsch' },
-                en: { flag: '🇬🇧', label: 'English' },
-                fr: { flag: '🇫🇷', label: 'Français' }
+                de: { label: 'Deutsch' },
+                en: { label: 'English' },
+                fr: { label: 'Français' }
             };
 
             if (langBtn && langDropdown) {
@@ -1339,7 +1298,6 @@
                         var newLang = opt.getAttribute('data-lang');
                         langOptions.forEach(function(o) { o.classList.remove('active'); });
                         opt.classList.add('active');
-                        langFlag.textContent = langDisplay[newLang].flag;
                         langLabel.textContent = langDisplay[newLang].label;
                         langDropdown.classList.remove('open');
                         switchLanguage(newLang);
