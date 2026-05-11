@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>RbxTournaments Launcher</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <title>Rivals Team Cup - Launcher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,159 +12,150 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #0a0a14;
+            --surface: #12121f;
+            --surface2: #161628;
+            --header-bg: rgba(10, 10, 20, 0.88);
+            --footer-bg: #080812;
+            --text: #f0f0f8;
+            --text-dim: #b0b0c8;
+            --text-bright: #ffffff;
+            --accent: #ff2d2d;
+            --accent-glow: rgba(255, 45, 45, 0.55);
+            --accent-glow-strong: rgba(255, 45, 45, 0.75);
+            --white-glow: rgba(255, 255, 255, 0.35);
+            --border: #1e1e35;
+            --border-light: #2a2a45;
+            --hover-bg: rgba(255, 255, 255, 0.04);
+            --github: #9999b5;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-sm: 8px;
+            --gold: #ffb800;
+            --gold-glow: rgba(255, 184, 0, 0.4);
+            --transition-fast: 0.15s ease;
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0c12;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background Bubbles - exact same as index */
+        .bg-bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
             overflow: hidden;
         }
-
-        /* Roblox-style animated background */
-        .bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 30% 40%, #1a1a2e 0%, #0a0c12 100%);
-            z-index: 0;
+        .bg-bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(255, 45, 45, 0.07) 0%, transparent 70%);
+            animation: bubbleFloat 18s ease-in-out infinite;
+            filter: blur(40px);
         }
-
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 45, 45, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 45, 45, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .bg-glow {
-            position: fixed;
-            top: -20%;
-            left: -20%;
-            width: 140%;
-            height: 140%;
-            background: radial-gradient(circle at center, rgba(255, 45, 45, 0.08) 0%, transparent 60%);
-            z-index: 0;
-            pointer-events: none;
-            animation: slowRotate 30s ease-in-out infinite;
-        }
-
-        @keyframes slowRotate {
+        @keyframes bubbleFloat {
             0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-            50% { transform: translate(3%, 2%) scale(1.05); opacity: 0.7; }
+            25% { transform: translate(80px, -60px) scale(1.2); opacity: 0.8; }
+            50% { transform: translate(-40px, -120px) scale(0.9); opacity: 0.4; }
+            75% { transform: translate(60px, 40px) scale(1.15); opacity: 0.7; }
         }
 
-        /* MAIN LAUNCHER WINDOW - Professional App Style */
+        /* LAUNCHER WINDOW */
         .launcher {
             position: relative;
             z-index: 10;
-            width: 900px;
-            max-width: 90vw;
-            background: rgba(18, 20, 28, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 45, 45, 0.15);
+            width: 1100px;
+            max-width: 92vw;
+            background: rgba(18, 18, 31, 0.98);
+            backdrop-filter: blur(24px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 45, 45, 0.25);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 45, 45, 0.1), 0 0 40px rgba(255, 45, 45, 0.1);
             overflow: hidden;
-            animation: appIn 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            animation: launcherIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes launcherIn {
+            from { opacity: 0; transform: scale(0.96) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        @keyframes appIn {
-            from {
-                opacity: 0;
-                transform: scale(0.96) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        /* Windows 11-style title bar */
+        /* Title Bar - exactly like index header style */
         .title-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 12px 20px;
-            background: rgba(10, 12, 18, 0.8);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(10, 10, 20, 0.9);
+            border-bottom: 1px solid var(--border);
         }
-
+        .title-logo {
+            font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        .title-logo .red {
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
         .window-controls {
             display: flex;
             gap: 12px;
         }
-
-        .win-control {
-            width: 32px;
-            height: 32px;
+        .win-btn {
+            width: 30px;
+            height: 30px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
             transition: all 0.15s;
-            color: #a0a0b0;
+            color: #b0b0c8;
             font-size: 14px;
+            font-weight: 500;
         }
+        .win-btn:hover { background: rgba(255, 255, 255, 0.12); color: white; }
+        .win-btn.close:hover { background: #e81123; color: white; }
 
-        .win-control:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: white;
-        }
-
-        .win-control.close:hover {
-            background: #e81123;
-            color: white;
-        }
-
-        .app-icon {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .app-icon svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        .app-icon span {
-            font-weight: 700;
-            font-size: 13px;
-            color: #e0e0e8;
-            letter-spacing: -0.3px;
-        }
-
-        .app-icon .red {
-            color: #ff3b3b;
-        }
-
-        /* MAIN CONTENT - Split layout like real launcher */
+        /* Main Layout */
         .launcher-main {
             display: flex;
-            min-height: 520px;
+            min-height: 560px;
         }
 
-        /* Sidebar */
+        /* Sidebar - with index style */
         .sidebar {
-            width: 240px;
-            background: rgba(8, 10, 16, 0.6);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            width: 230px;
+            background: rgba(8, 10, 18, 0.6);
+            border-right: 1px solid var(--border);
             padding: 20px 0;
         }
-
         .nav-item {
             display: flex;
             align-items: center;
@@ -173,37 +164,31 @@
             margin: 4px 12px;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.15s;
-            color: #a0a0b8;
-            font-size: 13px;
-            font-weight: 500;
+            transition: all 0.2s;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            font-weight: 600;
         }
-
         .nav-item svg {
             width: 18px;
             height: 18px;
             opacity: 0.7;
         }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-        }
-
+        .nav-item:hover { background: var(--hover-bg); color: #fff; }
         .nav-item.active {
             background: rgba(255, 45, 45, 0.12);
-            color: #ff5e5e;
+            color: var(--accent);
+            border-left: 2px solid var(--accent);
+            margin-left: 10px;
         }
+        .nav-item.active svg { opacity: 1; }
 
-        .nav-item.active svg {
-            opacity: 1;
-            color: #ff5e5e;
-        }
-
-        /* Right Content Area */
+        /* Content Area */
         .content-area {
             flex: 1;
             padding: 24px 28px;
+            overflow-y: auto;
+            max-height: 560px;
         }
 
         /* Status Badge */
@@ -220,7 +205,6 @@
             margin-bottom: 20px;
             border: 1px solid rgba(62, 255, 110, 0.2);
         }
-
         .status-dot {
             width: 8px;
             height: 8px;
@@ -228,118 +212,94 @@
             border-radius: 50%;
             animation: pulse 1.5s infinite;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
+        @keyframes pulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
 
         /* Main Title */
         .main-title {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, #ff9e9e 100%);
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #ff9e9e 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 8px;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
+            font-family: 'Space Grotesk', sans-serif;
         }
-
         .sub {
-            color: #7a7a9a;
+            color: var(--text-dim);
             font-size: 13px;
             margin-bottom: 28px;
         }
 
         /* Info Cards */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+        .info-cards {
+            display: flex;
             gap: 16px;
             margin-bottom: 28px;
+            flex-wrap: wrap;
         }
-
         .info-card {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 14px;
-            padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px 20px;
+            border: 1px solid var(--border);
+            flex: 1;
+            min-width: 140px;
         }
-
         .info-card .label {
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #ff5e5e;
+            color: var(--accent);
             font-weight: 600;
             margin-bottom: 8px;
         }
-
         .info-card .value {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             color: white;
         }
+        .info-card .subvalue { font-size: 11px; color: #6a6a8a; margin-top: 6px; }
 
-        .info-card .subvalue {
-            font-size: 11px;
-            color: #6a6a8a;
-            margin-top: 6px;
-        }
-
-        /* CODE INPUT AREA */
+        /* Code Section */
         .code-section {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 16px;
             padding: 20px;
-            border: 1px solid rgba(255, 45, 45, 0.2);
+            border: 1px solid var(--border);
             margin: 20px 0;
         }
-
         .code-label {
             font-size: 13px;
             font-weight: 600;
-            color: #c0c0d8;
+            color: var(--text-dim);
             margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
         .input-group {
             display: flex;
             gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
         }
-
         .code-input {
             flex: 1;
             background: #0c0e14;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 14px 18px;
-            font-family: 'Inter', monospace;
+            font-family: 'Space Grotesk', monospace;
             font-size: 14px;
             font-weight: 600;
             letter-spacing: 2px;
             color: white;
             outline: none;
-            transition: all 0.15s;
         }
-
-        .code-input:focus {
-            border-color: #ff3b3b;
-            box-shadow: 0 0 0 3px rgba(255, 59, 59, 0.15);
-        }
-
-        .code-input::placeholder {
-            letter-spacing: normal;
-            color: #3a3a50;
-            font-weight: 400;
-        }
-
-        .inject-btn {
+        .code-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 45, 45, 0.15); }
+        .send-btn {
             background: linear-gradient(135deg, #ff2d2d 0%, #cc0000 100%);
             border: none;
             border-radius: 12px;
@@ -349,25 +309,14 @@
             color: white;
             cursor: pointer;
             transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 8px rgba(255, 45, 45, 0.3);
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
+        .send-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 45, 45, 0.4); }
 
-        .inject-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(255, 45, 45, 0.4);
-        }
-
-        .inject-btn:active {
-            transform: translateY(1px);
-        }
-
-        /* Capabilities list */
+        /* Capabilities */
         .capabilities {
             margin-top: 24px;
         }
-
         .cap-title {
             font-size: 12px;
             font-weight: 600;
@@ -376,13 +325,11 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
         .cap-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
-
         .cap-item {
             background: rgba(255, 255, 255, 0.04);
             padding: 6px 14px;
@@ -392,31 +339,23 @@
             color: #b0b0c8;
         }
 
-        .cap-item.checked {
-            background: rgba(62, 255, 110, 0.1);
-            color: #3eff6e;
-            border: 1px solid rgba(62, 255, 110, 0.2);
-        }
-
-        /* User info bar at bottom */
+        /* User Bar */
         .user-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 12px 24px;
-            background: rgba(8, 10, 16, 0.9);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(8, 10, 18, 0.9);
+            border-top: 1px solid var(--border);
         }
-
         .user-info {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
         .avatar {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, #ff2d2d, #8b0000);
             border-radius: 50%;
             display: flex;
@@ -426,150 +365,183 @@
             font-size: 14px;
             color: white;
         }
+        .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .user-name { font-size: 14px; font-weight: 700; color: white; }
+        .user-status { font-size: 11px; color: #3eff6e; }
+        .version-tag { font-size: 11px; color: #5a5a7a; font-family: monospace; }
 
-        .user-name {
-            font-size: 13px;
+        /* TOURNAMENTS TABLE */
+        .tournaments-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .tournaments-table th {
+            text-align: left;
+            padding: 12px 8px;
+            color: #8a8aaa;
+            font-size: 11px;
             font-weight: 600;
-            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
         }
-
-        .user-status {
+        .tournaments-table td {
+            padding: 14px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+        }
+        .prize {
+            color: var(--gold);
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+        .join-btn {
+            background: rgba(255, 45, 45, 0.15);
+            border: 1px solid var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
             font-size: 11px;
-            color: #3eff6e;
+            font-weight: 600;
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.2s;
         }
+        .join-btn:hover { background: var(--accent); color: white; }
 
-        .version-tag {
-            font-size: 11px;
-            color: #5a5a7a;
-            font-family: monospace;
+        /* INVENTORY */
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
         }
+        .inventory-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .inventory-item:hover { transform: translateY(-4px); border-color: var(--accent); }
+        .inventory-icon { font-size: 32px; margin-bottom: 8px; }
+        .inventory-name { font-size: 12px; font-weight: 600; color: white; }
+        .inventory-value { font-size: 10px; color: var(--gold); margin-top: 4px; }
+
+        /* HISTORY */
+        .history-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .history-tournament { font-weight: 700; color: white; }
+        .history-date { font-size: 11px; color: #6a6a8a; }
+        .history-result { font-size: 13px; font-weight: 600; }
+        .history-result.win { color: #3eff6e; }
+        .history-result.place { color: var(--gold); }
 
         @media (max-width: 700px) {
-            .launcher-main {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                display: flex;
-                overflow-x: auto;
-                padding: 12px;
-                border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-            }
-            .nav-item {
-                padding: 8px 16px;
-                margin: 0 4px;
-                white-space: nowrap;
-            }
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-            .input-group {
-                flex-direction: column;
-            }
-            .inject-btn {
-                width: 100%;
-            }
-            .content-area {
-                padding: 20px;
-            }
+            .launcher-main { flex-direction: column; }
+            .sidebar { width: 100%; display: flex; overflow-x: auto; padding: 12px; border-right: none; border-bottom: 1px solid var(--border); }
+            .nav-item { white-space: nowrap; }
+            .content-area { padding: 20px; max-height: 500px; }
+            .info-cards { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
-    <div class="bg-grid"></div>
-    <div class="bg-glow"></div>
 
-    <div class="launcher">
-        <!-- Title Bar -->
-        <div class="title-bar">
-            <div class="app-icon">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="4" y="4" width="16" height="16" rx="3" stroke="#ff3b3b" stroke-width="1.5" fill="rgba(255,59,59,0.1)"/>
-                    <path d="M8 8L16 16M16 8L8 16" stroke="#ff3b3b" stroke-width="1.5" stroke-linecap="round"/>
-                    <circle cx="12" cy="12" r="2" fill="#ff3b3b"/>
+<div class="bg-bubbles" id="bgBubbles"></div>
+
+<div class="launcher">
+    <!-- Title Bar -->
+    <div class="title-bar">
+        <div class="title-logo">
+            <span>Roblox</span><span class="red">Tournaments</span>
+        </div>
+        <div class="window-controls">
+            <div class="win-btn" id="minimizeBtn">─</div>
+            <div class="win-btn close" id="closeBtn">✕</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="launcher-main">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="nav-item active" data-tab="launcher">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M3 9L12 3L21 9L12 15L3 9Z" stroke="currentColor" fill="none"/>
+                    <path d="M3 15L12 21L21 15" stroke="currentColor" fill="none"/>
                 </svg>
-                <span>Rbx<span class="red">Tournaments</span></span>
+                <span>Launcher</span>
             </div>
-            <div class="window-controls">
-                <div class="win-control" id="minimizeBtn">─</div>
-                <div class="win-control" id="maximizeBtn">□</div>
-                <div class="win-control close" id="closeBtn">✕</div>
+            <div class="nav-item" data-tab="tournaments">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" fill="none"/>
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" fill="none"/>
+                </svg>
+                <span>Tournaments</span>
+            </div>
+            <div class="nav-item" data-tab="inventory">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M20 12V8H4V12M20 12L12 20L4 12M20 12H4" stroke="currentColor" fill="none"/>
+                </svg>
+                <span>Inventory</span>
+            </div>
+            <div class="nav-item" data-tab="history">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" fill="none"/>
+                    <path d="M12 8V12L14 14" stroke="currentColor" fill="none"/>
+                </svg>
+                <span>History</span>
             </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="launcher-main">
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <div class="nav-item active">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M3 9L12 3L21 9L12 15L3 9Z" stroke="currentColor" fill="none"/>
-                        <path d="M3 15L12 21L21 15" stroke="currentColor" fill="none"/>
-                        <path d="M3 12L12 18L21 12" stroke="currentColor" fill="none"/>
-                    </svg>
-                    <span>Launcher</span>
-                </div>
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" fill="none"/>
-                        <path d="M2 17L12 22L22 17" stroke="currentColor" fill="none"/>
-                        <path d="M2 12L12 17L22 12" stroke="currentColor" fill="none"/>
-                    </svg>
-                    <span>Tournaments</span>
-                </div>
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M20 12V8H4V12M20 12L12 20L4 12M20 12H4" stroke="currentColor" fill="none"/>
-                    </svg>
-                    <span>Inventory</span>
-                </div>
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" fill="none"/>
-                        <path d="M12 8V12L14 14" stroke="currentColor" fill="none"/>
-                    </svg>
-                    <span>History</span>
-                </div>
-            </div>
-
-            <!-- Content Area -->
-            <div class="content-area">
+        <!-- Content Area - Launcher Tab (default) -->
+        <div class="content-area" id="contentArea">
+            <!-- Launcher Tab Content -->
+            <div id="launcherTab" class="tab-content">
                 <div class="status-badge">
                     <span class="status-dot"></span>
-                    <span>● Undetected since 2023</span>
+                    <span>● Ready</span>
                 </div>
 
-                <div class="main-title">Prestige Client</div>
-                <div class="sub">Advanced ghost client optimised for competitive Roblox tournaments</div>
+                <div class="main-title">Rivals Team Cup</div>
+                <div class="sub">Tournament launcher & client</div>
 
-                <div class="info-grid">
+                <div class="info-cards">
                     <div class="info-card">
-                        <div class="label">VERSIONS</div>
-                        <div class="value">1.21 → 1.21.11</div>
-                        <div class="subvalue">Full cross-version compatibility</div>
+                        <div class="label">VERSION</div>
+                        <div class="value">Beginning in</div>
+                        <div class="subvalue">12 Minutes</div>
                     </div>
                     <div class="info-card">
                         <div class="label">STATUS</div>
-                        <div class="value">● Active</div>
-                        <div class="subvalue">Cloud-synced configs ready</div>
+                        <div class="value">● Online</div>
+                        <div class="subvalue">Next cup: Rivals</div>
                     </div>
                 </div>
 
-                <!-- Code Input Section -->
+                <!-- Code Input -->
                 <div class="code-section">
                     <div class="code-label">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5e5e" stroke-width="2">
                             <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor"/>
                             <path d="M2 17L12 22L22 17" stroke="currentColor"/>
-                            <path d="M2 12L12 17L22 12" stroke="currentColor"/>
                         </svg>
                         LICENSE VERIFICATION
                     </div>
                     <div class="input-group">
                         <input type="text" class="code-input" id="licenseCode" placeholder="XXXXX-XXXXX-XXXXX" autocomplete="off">
-                        <button class="inject-btn" id="injectBtn">INJECT →</button>
+                        <button class="send-btn" id="sendBtn">SEND →</button>
                     </div>
                 </div>
 
@@ -577,175 +549,237 @@
                 <div class="capabilities">
                     <div class="cap-title">CAPABILITIES</div>
                     <div class="cap-grid">
-                        <span class="cap-item checked">✓ Standard injection method</span>
-                        <span class="cap-item checked">✓ Competitive-ready modules</span>
-                        <span class="cap-item checked">✓ Advanced Anti-Cheat bypass</span>
-                        <span class="cap-item checked">✓ Stringless</span>
-                        <span class="cap-item checked">✓ Screenshare-bypass capabilities</span>
-                        <span class="cap-item checked">✓ Cloud config system</span>
+                        <span class="cap-item">✓ Standard injection method</span>
+                        <span class="cap-item">✓ Competitive-ready modules</span>
+                        <span class="cap-item">✓ Advanced Anti-Cheat bypass</span>
+                        <span class="cap-item">✓ Stringless</span>
+                        <span class="cap-item">✓ Screenshare-bypass</span>
+                        <span class="cap-item">✓ Cloud config system</span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- User Bar -->
-        <div class="user-bar">
-            <div class="user-info">
-                <div class="avatar">N</div>
-                <div>
-                    <div class="user-name">Nexohhh</div>
-                    <div class="user-status">● Subscription active</div>
+            <!-- Tournaments Tab Content (hidden initially) -->
+            <div id="tournamentsTab" class="tab-content" style="display: none;">
+                <div class="main-title">Active Tournaments</div>
+                <div class="sub">Join and compete for Robux prizes</div>
+
+                <table class="tournaments-table">
+                    <thead>
+                        <tr><th>TOURNAMENT</th><th>GAME</th><th>PRIZE</th><th>PLAYERS</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Rivals Summer Cup</strong></td><td>Rivals</td><td class="prize">🏆 2,500 Robux</td><td>32/64</td><td><button class="join-btn">Join</button></td></tr>
+                        <tr><td><strong>MM2 Champions</strong></td><td>Murder Mystery 2</td><td class="prize">🏆 1,800 Robux</td><td>18/48</td><td><button class="join-btn">Join</button></td></tr>
+                        <tr><td><strong>Blade Ball Elite</strong></td><td>Blade Ball</td><td class="prize">🏆 2,000 Robux</td><td>27/50</td><td><button class="join-btn">Join</button></td></tr>
+                        <tr><td><strong>Rivals Pro League</strong></td><td>Rivals</td><td class="prize">🏆 5,000 Robux</td><td>12/32</td><td><button class="join-btn">Join</button></td></tr>
+                        <tr><td><strong>Weekend Showdown</strong></td><td>MM2</td><td class="prize">🏆 1,200 Robux</td><td>41/64</td><td><button class="join-btn">Join</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Inventory Tab Content -->
+            <div id="inventoryTab" class="tab-content" style="display: none;">
+                <div class="main-title">Your Inventory</div>
+                <div class="sub">Tournament rewards & items</div>
+
+                <div class="inventory-grid">
+                    <div class="inventory-item"><div class="inventory-icon">🏆</div><div class="inventory-name">Gold Trophy</div><div class="inventory-value">Season 1 Winner</div></div>
+                    <div class="inventory-item"><div class="inventory-icon">🎫</div><div class="inventory-name">Tournament Pass</div><div class="inventory-value">Entry ticket</div></div>
+                    <div class="inventory-item"><div class="inventory-icon">⭐</div><div class="inventory-name">Elite Badge</div><div class="inventory-value">Top 10%</div></div>
+                    <div class="inventory-item"><div class="inventory-icon">💎</div><div class="inventory-name">500 Robux</div><div class="inventory-value">Unclaimed</div></div>
+                    <div class="inventory-item"><div class="inventory-icon">🎖️</div><div class="inventory-name">MVP Medal</div><div class="inventory-value">S2 Champion</div></div>
                 </div>
             </div>
-            <div class="version-tag">v2.4.3 | build 0426</div>
+
+            <!-- History Tab Content -->
+            <div id="historyTab" class="tab-content" style="display: none;">
+                <div class="main-title">Match History</div>
+                <div class="sub">Your tournament performance</div>
+
+                <div class="history-item">
+                    <div><div class="history-tournament">Rivals Winter Cup</div><div class="history-date">March 15, 2026</div></div>
+                    <div class="history-result win">🏆 1st Place • +1,200 Robux</div>
+                </div>
+                <div class="history-item">
+                    <div><div class="history-tournament">MM2 Showdown</div><div class="history-date">March 8, 2026</div></div>
+                    <div class="history-result place">🎯 3rd Place • +800 Robux</div>
+                </div>
+                <div class="history-item">
+                    <div><div class="history-tournament">Blade Ball Open</div><div class="history-date">February 28, 2026</div></div>
+                    <div class="history-result place">🎯 Top 8 • +400 Robux</div>
+                </div>
+                <div class="history-item">
+                    <div><div class="history-tournament">Rivals Pro League</div><div class="history-date">February 20, 2026</div></div>
+                    <div class="history-result win">🏆 2nd Place • +1,000 Robux</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        (function() {
-            // Window controls (fake animations)
-            const launcher = document.querySelector('.launcher');
-            const minimizeBtn = document.getElementById('minimizeBtn');
-            const maximizeBtn = document.getElementById('maximizeBtn');
-            const closeBtn = document.getElementById('closeBtn');
-            const injectBtn = document.getElementById('injectBtn');
-            const licenseInput = document.getElementById('licenseCode');
+    <!-- User Bar -->
+    <div class="user-bar">
+        <div class="user-info">
+            <div class="avatar">
+                <img src="robloxnexohhh.png" alt="Profile" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none';this.parentElement.innerHTML='J'">
+                <span style="display:none;">J</span>
+            </div>
+            <div>
+                <div class="user-name">JumJum236</div>
+                <div class="user-status">✓ Verified Roblox account</div>
+            </div>
+        </div>
+        <div class="version-tag">v2.4.3 | Rivals Team Cup</div>
+    </div>
+</div>
 
-            let isMaximized = false;
-            let originalRect = null;
+<script>
+    (function() {
+        // Background bubbles
+        const bgBubbles = document.getElementById('bgBubbles');
+        if (bgBubbles) {
+            for (let i = 0; i < 8; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bg-bubble');
+                const size = Math.random() * 380 + 180;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = Math.random() * 90 + '%';
+                bubble.style.top = Math.random() * 90 + '%';
+                bubble.style.animationDelay = Math.random() * 18 + 's';
+                bubble.style.animationDuration = Math.random() * 24 + 12 + 's';
+                bgBubbles.appendChild(bubble);
+            }
+        }
 
-            function animateWindow(transform, opacity, duration = 200) {
-                if (!launcher) return;
-                launcher.style.transition = `all ${duration}ms cubic-bezier(0.2, 0.9, 0.4, 1.1)`;
-                if (transform) launcher.style.transform = transform;
-                if (opacity !== undefined) launcher.style.opacity = opacity;
+        // Window controls
+        const launcher = document.querySelector('.launcher');
+        const minimizeBtn = document.getElementById('minimizeBtn');
+        const closeBtn = document.getElementById('closeBtn');
+
+        if (minimizeBtn) {
+            minimizeBtn.addEventListener('click', () => {
+                launcher.style.transition = 'transform 0.2s, opacity 0.2s';
+                launcher.style.transform = 'scale(0.95) translateY(15px)';
+                launcher.style.opacity = '0';
                 setTimeout(() => {
-                    launcher.style.transition = '';
                     launcher.style.transform = '';
                     launcher.style.opacity = '';
-                }, duration + 50);
-            }
-
-            if (minimizeBtn) {
-                minimizeBtn.addEventListener('click', () => {
-                    animateWindow('scale(0.95) translateY(15px)', 0, 150);
-                    setTimeout(() => {
-                        animateWindow('scale(1) translateY(0)', 1, 200);
-                    }, 180);
-                });
-            }
-
-            if (maximizeBtn) {
-                maximizeBtn.addEventListener('click', () => {
-                    if (!isMaximized) {
-                        originalRect = launcher.getBoundingClientRect();
-                        launcher.style.position = 'fixed';
-                        launcher.style.top = '0';
-                        launcher.style.left = '0';
-                        launcher.style.width = '100%';
-                        launcher.style.height = '100%';
-                        launcher.style.borderRadius = '0';
-                        launcher.style.maxWidth = '100%';
-                        isMaximized = true;
-                    } else {
-                        launcher.style.position = '';
-                        launcher.style.top = '';
-                        launcher.style.left = '';
-                        launcher.style.width = '';
-                        launcher.style.height = '';
-                        launcher.style.borderRadius = '';
-                        launcher.style.maxWidth = '';
-                        isMaximized = false;
-                    }
-                });
-            }
-
-            if (closeBtn) {
-                closeBtn.addEventListener('click', () => {
-                    animateWindow('scale(0.92)', 0, 150);
-                    setTimeout(() => {
-                        animateWindow('scale(1)', 1, 200);
-                    }, 200);
-                });
-            }
-
-            // Inject button simulation
-            function showNotification(message, isError = false) {
-                const notif = document.createElement('div');
-                notif.textContent = message;
-                notif.style.position = 'fixed';
-                notif.style.bottom = '100px';
-                notif.style.left = '50%';
-                notif.style.transform = 'translateX(-50%)';
-                notif.style.background = isError ? 'rgba(232, 17, 35, 0.95)' : 'rgba(39, 201, 63, 0.95)';
-                notif.style.backdropFilter = 'blur(16px)';
-                notif.style.padding = '12px 28px';
-                notif.style.borderRadius = '40px';
-                notif.style.fontSize = '13px';
-                notif.style.fontWeight = '600';
-                notif.style.color = 'white';
-                notif.style.zIndex = '1000';
-                notif.style.fontFamily = "'Inter', sans-serif";
-                notif.style.border = '1px solid rgba(255,255,255,0.2)';
-                notif.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
-                notif.style.pointerEvents = 'none';
-                document.body.appendChild(notif);
-                setTimeout(() => {
-                    notif.style.opacity = '0';
-                    notif.style.transition = 'opacity 0.3s';
-                    setTimeout(() => notif.remove(), 350);
-                }, 2500);
-            }
-
-            if (injectBtn) {
-                injectBtn.addEventListener('click', () => {
-                    const code = licenseInput.value.trim();
-                    if (!code) {
-                        showNotification('✕ Please enter a license key', true);
-                        return;
-                    }
-                    
-                    injectBtn.disabled = true;
-                    injectBtn.textContent = 'INJECTING...';
-                    injectBtn.style.opacity = '0.7';
-                    
-                    setTimeout(() => {
-                        if (code.length >= 8) {
-                            showNotification('✓ Injection successful! Launcher ready.');
-                            const statusBadge = document.querySelector('.status-badge');
-                            if (statusBadge) {
-                                statusBadge.style.background = 'rgba(62, 255, 110, 0.2)';
-                                statusBadge.style.borderColor = 'rgba(62, 255, 110, 0.4)';
-                            }
-                        } else {
-                            showNotification('✕ Invalid license key', true);
-                        }
-                        injectBtn.disabled = false;
-                        injectBtn.textContent = 'INJECT →';
-                        injectBtn.style.opacity = '1';
-                    }, 1200);
-                });
-            }
-
-            if (licenseInput) {
-                licenseInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        injectBtn.click();
-                    }
-                });
-            }
-
-            // Navigation highlight simulation
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    navItems.forEach(nav => nav.classList.remove('active'));
-                    this.classList.add('active');
-                    showNotification('Feature coming in next update', false);
-                });
+                    launcher.style.transition = '';
+                }, 200);
             });
-        })();
-    </script>
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                launcher.style.transition = 'transform 0.15s, opacity 0.15s';
+                launcher.style.transform = 'scale(0.92)';
+                launcher.style.opacity = '0';
+                setTimeout(() => {
+                    launcher.style.transform = '';
+                    launcher.style.opacity = '';
+                    launcher.style.transition = '';
+                }, 180);
+            });
+        }
+
+        // Tab switching
+        const navItems = document.querySelectorAll('.nav-item');
+        const tabs = {
+            launcher: document.getElementById('launcherTab'),
+            tournaments: document.getElementById('tournamentsTab'),
+            inventory: document.getElementById('inventoryTab'),
+            history: document.getElementById('historyTab')
+        };
+
+        function switchTab(tabId) {
+            Object.keys(tabs).forEach(id => {
+                if (tabs[id]) tabs[id].style.display = 'none';
+            });
+            if (tabs[tabId]) tabs[tabId].style.display = 'block';
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-tab') === tabId) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const tabId = item.getAttribute('data-tab');
+                if (tabId) switchTab(tabId);
+            });
+        });
+
+        // Send button simulation
+        const sendBtn = document.getElementById('sendBtn');
+        const codeInput = document.getElementById('licenseCode');
+
+        function showNotification(message, isError = false) {
+            const notif = document.createElement('div');
+            notif.textContent = message;
+            notif.style.position = 'fixed';
+            notif.style.bottom = '120px';
+            notif.style.left = '50%';
+            notif.style.transform = 'translateX(-50%)';
+            notif.style.background = isError ? 'rgba(232, 17, 35, 0.95)' : 'rgba(39, 201, 63, 0.95)';
+            notif.style.backdropFilter = 'blur(16px)';
+            notif.style.padding = '12px 28px';
+            notif.style.borderRadius = '40px';
+            notif.style.fontSize = '13px';
+            notif.style.fontWeight = '600';
+            notif.style.color = 'white';
+            notif.style.zIndex = '1000';
+            notif.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
+            notif.style.border = '1px solid rgba(255,255,255,0.2)';
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.style.opacity = '0';
+                notif.style.transition = 'opacity 0.3s';
+                setTimeout(() => notif.remove(), 350);
+            }, 2500);
+        }
+
+        if (sendBtn) {
+            sendBtn.addEventListener('click', () => {
+                const code = codeInput.value.trim();
+                if (!code) {
+                    showNotification('✕ Please enter a license key', true);
+                    return;
+                }
+                sendBtn.disabled = true;
+                sendBtn.textContent = 'SENDING...';
+                setTimeout(() => {
+                    if (code.length >= 5) {
+                        showNotification('✓ License verified! Launcher ready.');
+                        const statusBadge = document.querySelector('.status-badge span:last-child');
+                        if (statusBadge) statusBadge.innerHTML = '● Licensed & Ready';
+                    } else {
+                        showNotification('✕ Invalid license key', true);
+                    }
+                    sendBtn.disabled = false;
+                    sendBtn.textContent = 'SEND →';
+                }, 1200);
+            });
+        }
+
+        if (codeInput) {
+            codeInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendBtn.click();
+            });
+        }
+
+        // Join button handlers
+        document.querySelectorAll('.join-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                showNotification('✓ Joined tournament! Check back soon for match info.', false);
+            });
+        });
+
+        console.log('Rivals Team Cup Launcher - Ready');
+    })();
+</script>
 </body>
 </html>
