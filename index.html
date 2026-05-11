@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RobloxTournaments.github.io</title>
+    <link rel="preload" as="image" href="screenshot1.png">
+    <link rel="preload" as="image" href="screenshot2.png">
+    <link rel="preload" as="image" href="screenshot3.png">
+    <link rel="preload" as="image" href="rivals.png">
+    <link rel="preload" as="image" href="mm2.png">
+    <link rel="preload" as="image" href="bladeball.png">
     <style>
-        /* ============ RESET & FONTS ============ */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
         * {
             margin: 0;
@@ -15,21 +20,24 @@
         }
 
         :root {
-            --bg: #0a0a0f;
-            --surface: #12121a;
-            --header-bg: rgba(10, 10, 15, 0.85);
-            --text: #e0e0e0;
-            --text-dim: #8888a0;
-            --accent: #ff3333;
-            --accent-glow: rgba(255, 51, 51, 0.5);
-            --gold: #ffaa00;
-            --gold-glow: rgba(255, 170, 0, 0.4);
-            --border: #1e1e2e;
-            --hover-bg: rgba(255, 255, 255, 0.04);
-            --github: #6e7681;
-            --glow-soft: rgba(255, 255, 255, 0.05);
-            --radius: 10px;
-            --radius-sm: 6px;
+            --bg: #06060b;
+            --surface: #0d0d16;
+            --surface2: #11111d;
+            --header-bg: rgba(6, 6, 11, 0.9);
+            --text: #e8e8f0;
+            --text-dim: #7a7a95;
+            --accent: #ff2d2d;
+            --accent-glow: rgba(255, 45, 45, 0.6);
+            --accent-glow-strong: rgba(255, 45, 45, 0.8);
+            --white-glow: rgba(255, 255, 255, 0.4);
+            --gold: #ffb800;
+            --gold-glow: rgba(255, 184, 0, 0.5);
+            --border: #1a1a2e;
+            --hover-bg: rgba(255, 255, 255, 0.03);
+            --github: #8b8ba5;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-sm: 8px;
             --transition-fast: 0.15s ease;
             --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-bounce: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -41,7 +49,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
@@ -50,16 +58,18 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(255, 45, 45, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
+                radial-gradient(ellipse at 20% 80%, rgba(255, 45, 45, 0.04) 0%, transparent 50%);
         }
 
-        /* ============ ANIMATION BASE ============ */
         .fade-up {
             opacity: 0;
-            transform: translateY(25px);
-            transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
-                transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
-
         .fade-up.visible {
             opacity: 1;
             transform: translateY(0);
@@ -67,20 +77,18 @@
 
         .fade-in {
             opacity: 0;
-            transition: opacity 0.6s ease;
+            transition: opacity 0.7s ease;
         }
-
         .fade-in.visible {
             opacity: 1;
         }
 
         .fade-left {
             opacity: 0;
-            transform: translateX(-30px);
-            transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
-                transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+            transform: translateX(-35px);
+            transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
-
         .fade-left.visible {
             opacity: 1;
             transform: translateX(0);
@@ -88,11 +96,10 @@
 
         .fade-right {
             opacity: 0;
-            transform: translateX(30px);
-            transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
-                transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+            transform: translateX(35px);
+            transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
-
         .fade-right.visible {
             opacity: 1;
             transform: translateX(0);
@@ -100,61 +107,62 @@
 
         .scale-in {
             opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
-                transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+            transform: scale(0.88);
+            transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
-
         .scale-in.visible {
             opacity: 1;
             transform: scale(1);
         }
 
-        /* ============ HEADER ============ */
         .header {
             position: sticky;
             top: 0;
             z-index: 1000;
             background: var(--header-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid var(--border);
-            padding: 0 24px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            padding: 0 28px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.6);
+        }
+        .header.hidden {
+            transform: translateY(-100%);
         }
 
         .header-inner {
-            max-width: 1300px;
+            max-width: 1350px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 70px;
-            gap: 16px;
-            flex-wrap: wrap;
+            height: 72px;
+            gap: 20px;
         }
 
         .logo-group {
             display: flex;
             align-items: baseline;
-            gap: 6px;
+            gap: 8px;
             flex-shrink: 0;
             white-space: nowrap;
+            margin-left: 0;
         }
 
         .logo {
+            font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
             font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -0.5px;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 60px rgba(255, 255, 255, 0.15);
-            transition: text-shadow 0.3s ease;
+            color: var(--accent);
+            text-shadow: 0 0 25px var(--accent-glow), 0 0 55px rgba(255, 45, 45, 0.35), 0 0 90px rgba(255, 45, 45, 0.2);
+            transition: text-shadow 0.4s ease;
             cursor: default;
         }
-
         .logo:hover {
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5), 0 0 80px rgba(255, 255, 255, 0.25);
+            text-shadow: 0 0 35px var(--accent-glow-strong), 0 0 70px rgba(255, 45, 45, 0.5), 0 0 110px rgba(255, 45, 45, 0.3);
         }
 
         .github-badge {
@@ -165,111 +173,101 @@
             display: flex;
             align-items: center;
             gap: 4px;
-            opacity: 0.8;
+            opacity: 0.75;
             transition: opacity 0.3s ease, color 0.3s ease;
         }
-
         .github-badge:hover {
             opacity: 1;
-            color: #b0b8c4;
+            color: #c0c0d5;
         }
-
         .github-badge svg {
             width: 13px;
             height: 13px;
             fill: currentColor;
         }
 
-        /* ============ NAVIGATION ============ */
         .nav {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             flex-wrap: wrap;
             list-style: none;
+            margin-right: 0;
+            margin-left: auto;
+            padding-left: 30px;
         }
 
         .nav-link {
             text-decoration: none;
             color: var(--text-dim);
-            font-weight: 500;
-            font-size: 0.9rem;
-            padding: 8px 16px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 8px 17px;
             border-radius: var(--radius-sm);
             position: relative;
             transition: color var(--transition-fast), background var(--transition-fast),
                 transform var(--transition-fast), box-shadow var(--transition-fast);
-            letter-spacing: 0.2px;
+            letter-spacing: 0.3px;
             white-space: nowrap;
         }
-
         .nav-link::after {
             content: '';
             position: absolute;
             bottom: 2px;
             left: 50%;
             transform: translateX(-50%) scaleX(0);
-            width: 60%;
+            width: 65%;
             height: 2px;
-            background: var(--accent);
+            background: #fff;
             border-radius: 2px;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow);
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 10px var(--white-glow), 0 0 20px rgba(255, 255, 255, 0.2);
         }
-
         .nav-link:hover {
             color: #fff;
             background: var(--hover-bg);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
-
         .nav-link:hover::after {
             transform: translateX(-50%) scaleX(1);
         }
-
         .nav-link.active {
             color: #fff;
-            font-weight: 600;
+            font-weight: 700;
         }
-
         .nav-link.active::after {
             transform: translateX(-50%) scaleX(1);
             background: #fff;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px var(--white-glow), 0 0 25px rgba(255, 255, 255, 0.3);
         }
 
-        /* Tournaments Link - RED ACCENT */
         .nav-link.tournaments {
             color: var(--accent);
             font-weight: 700;
-            text-shadow: 0 0 12px var(--accent-glow);
+            text-shadow: 0 0 14px var(--accent-glow);
             animation: tournamentsPulse 2.5s ease-in-out infinite;
             letter-spacing: 0.5px;
         }
-
         @keyframes tournamentsPulse {
             0%,
             100% {
-                text-shadow: 0 0 12px var(--accent-glow), 0 0 25px rgba(255, 51, 51, 0.3);
+                text-shadow: 0 0 14px var(--accent-glow), 0 0 30px rgba(255, 45, 45, 0.35);
             }
             50% {
-                text-shadow: 0 0 22px var(--accent-glow), 0 0 45px rgba(255, 51, 51, 0.55), 0 0 65px rgba(255, 51, 51, 0.25);
+                text-shadow: 0 0 26px var(--accent-glow-strong), 0 0 55px rgba(255, 45, 45, 0.6), 0 0 75px rgba(255, 45, 45, 0.3);
             }
         }
-
         .nav-link.tournaments::after {
-            background: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow), 0 0 30px var(--accent-glow);
+            background: var(--accent) !important;
+            box-shadow: 0 0 18px var(--accent-glow), 0 0 35px var(--accent-glow) !important;
         }
-
         .nav-link.tournaments:hover {
             color: #ff5555;
-            text-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(255, 51, 51, 0.6);
-            transform: translateY(-2px) scale(1.03);
-            background: rgba(255, 51, 51, 0.08);
+            text-shadow: 0 0 24px var(--accent-glow-strong), 0 0 50px rgba(255, 45, 45, 0.7);
+            transform: translateY(-2px) scale(1.04);
+            background: rgba(255, 45, 45, 0.1);
         }
 
-        /* ============ MOBILE NAV TOGGLE ============ */
         .menu-toggle {
             display: none;
             background: none;
@@ -281,218 +279,419 @@
             font-size: 1.3rem;
             transition: all var(--transition-fast);
         }
-
         .menu-toggle:hover {
             background: var(--hover-bg);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 18px rgba(255, 255, 255, 0.12);
         }
 
-        /* ============ MAIN CONTENT ============ */
         .main {
             flex: 1;
-            max-width: 1300px;
+            max-width: 1350px;
             margin: 0 auto;
-            padding: 50px 24px 60px;
+            padding: 45px 28px 60px;
             width: 100%;
         }
 
-        /* ============ HERO SECTION ============ */
         .hero {
             text-align: center;
-            padding: 60px 20px 50px;
-            margin-bottom: 40px;
+            padding: 50px 20px 40px;
+            margin-bottom: 35px;
         }
 
-        .hero-badge {
+        .hero-launcher-tag {
             display: inline-block;
-            padding: 6px 18px;
+            padding: 7px 22px;
             border-radius: 50px;
-            background: rgba(255, 51, 51, 0.1);
-            border: 1px solid rgba(255, 51, 51, 0.3);
+            background: rgba(255, 45, 45, 0.08);
+            border: 1px solid rgba(255, 45, 45, 0.3);
             color: var(--accent);
+            font-family: 'Space Grotesk', monospace;
             font-weight: 600;
             font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.15), inset 0 0 20px rgba(255, 51, 51, 0.05);
+            box-shadow: 0 0 25px rgba(255, 45, 45, 0.18), inset 0 0 20px rgba(255, 45, 45, 0.04);
+            transition: all 0.35s ease;
+            cursor: default;
+            user-select: all;
+        }
+        .hero-launcher-tag:hover {
+            box-shadow: 0 0 40px rgba(255, 45, 45, 0.3), inset 0 0 30px rgba(255, 45, 45, 0.08);
+            border-color: rgba(255, 45, 45, 0.55);
+            transform: translateY(-2px);
         }
 
         .hero-title {
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(2.4rem, 5.5vw, 3.8rem);
             font-weight: 900;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
             color: #fff;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
-            margin-bottom: 16px;
-            line-height: 1.15;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.25), 0 0 100px rgba(255, 45, 45, 0.2);
+            margin-bottom: 14px;
+            line-height: 1.1;
         }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-size: clamp(1rem, 1.8vw, 1.15rem);
             color: var(--text-dim);
-            max-width: 600px;
-            margin: 0 auto 30px;
+            max-width: 620px;
+            margin: 0 auto 28px;
             line-height: 1.6;
+        }
+
+        .screenshot-slider {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto 30px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(255, 45, 45, 0.12), 0 20px 50px rgba(0, 0, 0, 0.6);
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.35s ease;
+            aspect-ratio: 16 / 9;
+            background: #0a0a12;
+        }
+        .screenshot-slider:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 60px rgba(255, 45, 45, 0.2), 0 30px 70px rgba(0, 0, 0, 0.75);
+        }
+        .screenshot-slider img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+            border-radius: var(--radius-lg);
+        }
+        .screenshot-slider img.active {
+            opacity: 1;
+        }
+
+        .screenshot-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .screenshot-overlay.active {
+            display: flex;
+        }
+        .screenshot-overlay img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 0 80px rgba(255, 45, 45, 0.3), 0 30px 80px rgba(0, 0, 0, 0.8);
+            animation: overlayIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes overlayIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .hero-cta {
             display: inline-block;
-            padding: 13px 32px;
+            padding: 14px 36px;
             border-radius: 50px;
             background: var(--accent);
             color: #fff;
             text-decoration: none;
             font-weight: 700;
             font-size: 1rem;
-            letter-spacing: 0.3px;
-            box-shadow: 0 0 25px var(--accent-glow), 0 0 50px rgba(255, 51, 51, 0.25);
+            letter-spacing: 0.4px;
+            font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+            box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(255, 45, 45, 0.3), 0 8px 25px rgba(255, 45, 45, 0.3);
             transition: all var(--transition-smooth);
             position: relative;
             overflow: hidden;
         }
-
         .hero-cta:hover {
-            transform: translateY(-3px) scale(1.04);
-            box-shadow: 0 0 40px var(--accent-glow), 0 0 80px rgba(255, 51, 51, 0.4), 0 12px 30px rgba(255, 51, 51, 0.3);
-            background: #ff4444;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 0 50px var(--accent-glow-strong), 0 0 100px rgba(255, 45, 45, 0.5), 0 16px 40px rgba(255, 45, 45, 0.4);
+            background: #ff3b3b;
         }
-
         .hero-cta:active {
-            transform: scale(0.96);
+            transform: scale(0.95);
             transition: all 0.1s ease;
         }
 
-        /* ============ FEATURES GRID ============ */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 50px;
+        .section-title {
+            font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            color: #fff;
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+            text-align: center;
+            margin-bottom: 35px;
         }
 
-        .feature-card {
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px 24px;
-            transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-            position: relative;
+            border-radius: var(--radius-lg);
             overflow: hidden;
+            transition: all 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+            position: relative;
         }
-
-        .feature-card::before {
+        .game-card::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at center, rgba(255, 51, 51, 0.06) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(255, 45, 45, 0.06) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.5s ease;
             pointer-events: none;
+            z-index: 0;
         }
-
-        .feature-card:hover {
-            border-color: rgba(255, 51, 51, 0.3);
-            transform: translateY(-6px);
-            box-shadow: 0 0 30px rgba(255, 51, 51, 0.12), 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(255, 51, 51, 0.05);
+        .game-card:hover {
+            border-color: rgba(255, 45, 45, 0.35);
+            transform: translateY(-8px);
+            box-shadow: 0 0 35px rgba(255, 45, 45, 0.14), 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 70px rgba(255, 45, 45, 0.06);
         }
-
-        .feature-card:hover::before {
+        .game-card:hover::before {
             opacity: 1;
         }
-
-        .feature-icon {
-            font-size: 2.2rem;
-            margin-bottom: 14px;
+        .game-card-img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
             display: block;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(-3deg);
+        .game-card-body {
+            padding: 20px 22px 22px;
+            position: relative;
+            z-index: 1;
         }
-
-        .feature-card h3 {
+        .game-card-body h3 {
+            font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: #fff;
             margin-bottom: 6px;
-            letter-spacing: -0.2px;
+            letter-spacing: -0.3px;
         }
-
-        .feature-card p {
-            font-size: 0.9rem;
+        .game-card-body p {
+            font-size: 0.88rem;
             color: var(--text-dim);
             line-height: 1.55;
         }
 
-        /* ============ FOOTER ============ */
+        .view-tournaments-btn {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 50px;
+            padding: 14px 36px;
+            border-radius: 50px;
+            background: transparent;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.4px;
+            font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow), inset 0 0 15px rgba(255, 45, 45, 0.05);
+            transition: all var(--transition-smooth);
+            text-align: center;
+        }
+        .view-tournaments-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 0 45px var(--accent-glow-strong), 0 0 80px rgba(255, 45, 45, 0.4), 0 12px 30px rgba(255, 45, 45, 0.3);
+        }
+        .view-tournaments-btn:active {
+            transform: scale(0.95);
+            transition: all 0.1s ease;
+        }
+
+        .steps-section {
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .step-number {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--surface2);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent);
+            box-shadow: 0 0 18px rgba(255, 45, 45, 0.2);
+            transition: all 0.35s ease;
+        }
+        .step-item:hover .step-number {
+            box-shadow: 0 0 30px var(--accent-glow), 0 0 55px rgba(255, 45, 45, 0.35);
+            border-color: rgba(255, 45, 45, 0.5);
+        }
+        .step-content {
+            flex: 1;
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            line-height: 1.65;
+            padding-top: 10px;
+        }
+        .step-content strong {
+            color: #fff;
+            text-shadow: 0 0 12px var(--white-glow);
+        }
+        .step-content .glow-name {
+            color: #fff;
+            font-weight: 600;
+            text-shadow: 0 0 14px var(--white-glow), 0 0 30px rgba(255, 255, 255, 0.25);
+            transition: text-shadow 0.3s ease;
+        }
+        .step-content .glow-name:hover {
+            text-shadow: 0 0 22px rgba(255, 255, 255, 0.6), 0 0 45px rgba(255, 255, 255, 0.35);
+        }
+        .step-content .link-red {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            text-shadow: 0 0 12px var(--accent-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .step-content .link-red:hover {
+            text-shadow: 0 0 24px var(--accent-glow-strong), 0 0 45px rgba(255, 45, 45, 0.5);
+            color: #ff5555;
+        }
+
+        .compete-btn {
+            display: block;
+            width: fit-content;
+            margin: 0 auto;
+            padding: 14px 40px;
+            border-radius: 50px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+            box-shadow: 0 0 35px var(--accent-glow), 0 0 70px rgba(255, 45, 45, 0.35), 0 10px 28px rgba(255, 45, 45, 0.35);
+            transition: all var(--transition-smooth);
+        }
+        .compete-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 0 55px var(--accent-glow-strong), 0 0 110px rgba(255, 45, 45, 0.55), 0 18px 45px rgba(255, 45, 45, 0.45);
+            background: #ff3b3b;
+        }
+        .compete-btn:active {
+            transform: scale(0.95);
+            transition: all 0.1s ease;
+        }
+
         .footer {
             background: var(--surface);
             border-top: 1px solid var(--border);
-            padding: 32px 24px;
+            padding: 35px 24px 30px;
             text-align: center;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
         }
-
         .footer-inner {
-            max-width: 1300px;
+            max-width: 1350px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
-
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(255, 45, 45, 0.3);
+            margin-bottom: 2px;
+        }
+        .footer-glow-line {
+            width: 70px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            box-shadow: 0 0 18px var(--accent-glow), 0 0 35px rgba(255, 45, 45, 0.3);
+            margin-bottom: 4px;
+        }
         .footer-links {
             display: flex;
-            gap: 20px;
+            gap: 22px;
             flex-wrap: wrap;
             justify-content: center;
         }
-
         .footer-link {
             color: var(--text-dim);
             text-decoration: none;
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
             transition: color var(--transition-fast), text-shadow var(--transition-fast);
         }
-
         .footer-link:hover {
             color: #fff;
-            text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+            text-shadow: 0 0 14px var(--white-glow);
         }
-
         .footer-copy {
             color: var(--github);
             font-size: 0.78rem;
         }
 
-        .footer-glow-line {
-            width: 60px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 2px;
-            box-shadow: 0 0 15px var(--accent-glow);
-            margin: 6px 0;
-        }
-
-        /* ============ RESPONSIVE ============ */
         @media (max-width: 768px) {
             .header-inner {
                 height: auto;
                 padding: 12px 0;
                 gap: 10px;
             }
-
             .menu-toggle {
                 display: block;
             }
-
             .nav {
                 display: none;
                 width: 100%;
@@ -500,13 +699,12 @@
                 align-items: stretch;
                 gap: 2px;
                 padding-bottom: 8px;
+                padding-left: 0;
             }
-
             .nav.open {
                 display: flex;
                 animation: navSlideDown 0.35s ease;
             }
-
             @keyframes navSlideDown {
                 from {
                     opacity: 0;
@@ -517,67 +715,63 @@
                     transform: translateY(0);
                 }
             }
-
             .nav-link {
                 text-align: center;
                 padding: 12px 16px;
-                border-radius: var(--radius-sm);
             }
-
             .nav-link::after {
                 display: none;
             }
-
             .hero {
-                padding: 30px 10px 30px;
+                padding: 25px 10px 25px;
             }
-
-            .features-grid {
+            .games-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 18px;
             }
-
             .main {
-                padding: 30px 16px 40px;
+                padding: 25px 16px 35px;
+            }
+            .screenshot-slider {
+                max-width: 100%;
             }
         }
 
         @media (max-width: 480px) {
             .logo {
-                font-size: 1.2rem;
+                font-size: 1.15rem;
             }
-
             .github-badge {
-                font-size: 0.65rem;
+                font-size: 0.62rem;
             }
-
             .hero-title {
-                font-size: 1.7rem;
+                font-size: 1.8rem;
             }
-
-            .hero-cta {
-                padding: 11px 24px;
+            .hero-cta,
+            .view-tournaments-btn,
+            .compete-btn {
+                padding: 12px 24px;
                 font-size: 0.9rem;
             }
         }
 
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .nav {
-                gap: 0;
-            }
+        @media (min-width: 769px) and (max-width: 1100px) {
             .nav-link {
-                padding: 8px 12px;
-                font-size: 0.82rem;
+                padding: 8px 11px;
+                font-size: 0.8rem;
             }
             .logo {
-                font-size: 1.3rem;
+                font-size: 1.25rem;
+            }
+            .nav {
+                padding-left: 15px;
+                gap: 3px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ==================== HEADER ==================== -->
     <header class="header fade-in" id="header">
         <div class="header-inner">
             <div class="logo-group">
@@ -590,83 +784,142 @@
                 </span>
             </div>
 
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-                ☰
-            </button>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
 
             <nav class="nav" id="nav">
-                <a href="#" class="nav-link active">Home</a>
-                <a href="#" class="nav-link">Download</a>
-                <a href="#" class="nav-link tournaments">Tournaments</a>
-                <a href="#" class="nav-link">Information</a>
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="download.html" class="nav-link">Download</a>
+                <a href="tournaments.html" class="nav-link tournaments">Tournaments</a>
+                <a href="information.html" class="nav-link">Information</a>
             </nav>
         </div>
     </header>
 
-    <!-- ==================== MAIN CONTENT ==================== -->
     <main class="main">
 
-        <!-- HERO -->
         <section class="hero fade-up" id="heroSection">
-            <span class="hero-badge fade-in">🏆 Competitive Hub</span>
-            <h1 class="hero-title fade-up">Win Robux & In‑Game Items</h1>
+            <span class="hero-launcher-tag fade-in">RbxTournaments-v2.4.3.exe</span>
+            <h1 class="hero-title fade-up">New Launcher!</h1>
             <p class="hero-subtitle fade-up">
                 Join official Roblox tournaments across multiple games. <br>Compete. Win. Claim your prize.
             </p>
-            <a href="#" class="hero-cta scale-in">View Tournaments</a>
+
+            <div class="screenshot-slider scale-in" id="screenshotSlider">
+                <img src="screenshot1.png" alt="Screenshot 1" class="active">
+                <img src="screenshot2.png" alt="Screenshot 2">
+                <img src="screenshot3.png" alt="Screenshot 3">
+            </div>
+
+            <a href="download.html" class="hero-cta scale-in">Download Launcher</a>
         </section>
 
-        <!-- FEATURES -->
-        <section class="features-grid">
-            <div class="feature-card fade-left">
-                <span class="feature-icon">🎮</span>
-                <h3>Multiple Games</h3>
-                <p>Tournaments across the most popular Roblox experiences. Always fresh events.</p>
+        <div class="screenshot-overlay" id="screenshotOverlay">
+            <img src="" alt="Enlarged screenshot" id="overlayImg">
+        </div>
+
+        <h2 class="section-title fade-up">Supported Games</h2>
+
+        <section class="games-grid">
+            <div class="game-card fade-left">
+                <img src="rivals.png" alt="Rivals" class="game-card-img">
+                <div class="game-card-body">
+                    <h3>Rivals</h3>
+                    <p>Add a Roblox Tournaments admin or mod and join a party with them.</p>
+                </div>
             </div>
-            <div class="feature-card fade-up">
-                <span class="feature-icon">💎</span>
-                <h3>Robux Prizes</h3>
-                <p>Win Robux directly or rare in-game items. Real rewards delivered fast.</p>
+            <div class="game-card fade-up">
+                <img src="mm2.png" alt="Murder Mystery 2" class="game-card-img">
+                <div class="game-card-body">
+                    <h3>Murder Mystery 2 (MM2)</h3>
+                    <p>Join our private server and compete against other players and survive to get tournament points.</p>
+                </div>
             </div>
-            <div class="feature-card fade-right">
-                <span class="feature-icon">⚡</span>
-                <h3>Live Brackets</h3>
-                <p>Real-time tournament tracking. See your position and upcoming matches.</p>
+            <div class="game-card fade-right">
+                <img src="bladeball.png" alt="Blade Ball" class="game-card-img">
+                <div class="game-card-body">
+                    <h3>Blade Ball</h3>
+                    <p>Join our private server and get tournament points by killing and surviving.</p>
+                </div>
             </div>
         </section>
+
+        <a href="tournaments.html" class="view-tournaments-btn fade-up">View Tournaments</a>
+
+        <h2 class="section-title fade-up">How can I play?</h2>
+
+        <div class="steps-section">
+            <div class="step-item fade-left">
+                <div class="step-number">1</div>
+                <div class="step-content">Get a teammate to play the tournament <strong>(depends on the max team size for that tournament)</strong>.</div>
+            </div>
+            <div class="step-item fade-right">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    Contact one of these previous tournament players:
+                    <span class="glow-name">Jumjum322</span>,
+                    <span class="glow-name">Goisn</span>,
+                    <span class="glow-name">Nexoo</span>,
+                    <span class="glow-name">SNOWY Kenzo</span>,
+                    <span class="glow-name">Tikoar</span>,
+                    <span class="glow-name">ItsF1szy_</span>,
+                    <span class="glow-name">benoo694</span>,
+                    <span class="glow-name">Speedy</span>.
+                </div>
+            </div>
+            <div class="step-item fade-left">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    Download our launcher at <strong>RobloxTournaments.github.io/download</strong> or
+                    <a href="download.html" class="link-red">click here</a>
+                    and register your Roblox account with
+                    <a href="information.html" class="link-red">our bot</a>
+                    to verify.
+                </div>
+            </div>
+            <div class="step-item fade-right">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    Download TeamViewer and send your ID and password to the bot in the
+                    <a href="download.html" class="link-red">launcher</a>.
+                    After 1-2 minutes the bot will connect to your screen and watch you play
+                    to count the points and make sure you don't cheat with using Xeno or any other cheating software.
+                </div>
+            </div>
+            <div class="step-item fade-left">
+                <div class="step-number">5</div>
+                <div class="step-content">Join the tournament and play!</div>
+            </div>
+        </div>
+
+        <a href="download.html" class="compete-btn fade-up">Compete in a Tournament</a>
 
     </main>
 
-    <!-- ==================== FOOTER ==================== -->
     <footer class="footer fade-in" id="footer">
         <div class="footer-inner">
+            <div class="footer-logo">RobloxTournaments</div>
             <div class="footer-glow-line"></div>
             <div class="footer-links">
-                <a href="#" class="footer-link">Home</a>
-                <a href="#" class="footer-link">Download</a>
-                <a href="#" class="footer-link" style="color: var(--accent); text-shadow: 0 0 10px var(--accent-glow);">Tournaments</a>
-                <a href="#" class="footer-link">Information</a>
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="download.html" class="footer-link">Download</a>
+                <a href="tournaments.html" class="footer-link" style="color: var(--accent); text-shadow: 0 0 12px var(--accent-glow);">Tournaments</a>
+                <a href="information.html" class="footer-link">Information</a>
             </div>
-            <p class="footer-copy">© 2025 RobloxTournaments.github.io — Not affiliated with Roblox Corporation.</p>
+            <p class="footer-copy">&copy; 2026 Roblox Tournaments — Not affiliated with Roblox Corporation.</p>
         </div>
     </footer>
 
-    <!-- ==================== SCRIPT: Intersection Observer für Re-Animation ==================== -->
     <script>
         (function() {
-            // --- Mobile Menu Toggle ---
-            const menuToggle = document.getElementById('menuToggle');
-            const nav = document.getElementById('nav');
-
+            var menuToggle = document.getElementById('menuToggle');
+            var nav = document.getElementById('nav');
             if (menuToggle && nav) {
-                menuToggle.addEventListener('click', () => {
+                menuToggle.addEventListener('click', function() {
                     nav.classList.toggle('open');
                 });
-
-                // Close nav when a link is clicked (mobile)
-                const navLinks = nav.querySelectorAll('.nav-link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
+                var navLinks = nav.querySelectorAll('.nav-link');
+                navLinks.forEach(function(link) {
+                    link.addEventListener('click', function() {
                         if (window.innerWidth <= 768) {
                             nav.classList.remove('open');
                         }
@@ -674,54 +927,111 @@
                 });
             }
 
-            // --- Intersection Observer: Animations wiederholen sich ---
-            const animatedElements = document.querySelectorAll(
+            var header = document.getElementById('header');
+            var lastScrollY = window.scrollY;
+            var ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    requestAnimationFrame(function() {
+                        var currentScrollY = window.scrollY;
+                        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                            header.classList.add('hidden');
+                        } else if (currentScrollY < lastScrollY) {
+                            header.classList.remove('hidden');
+                        }
+                        lastScrollY = currentScrollY;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            var animatedElements = document.querySelectorAll(
                 '.fade-up, .fade-in, .fade-left, .fade-right, .scale-in'
             );
-
-            // Setze alle initial auf unsichtbar (falls nicht schon via CSS)
-            animatedElements.forEach(el => {
+            animatedElements.forEach(function(el) {
                 el.classList.remove('visible');
             });
 
-            const observerOptions = {
+            var observerOptions = {
                 root: null,
                 rootMargin: '0px 0px -60px 0px',
                 threshold: 0.15
             };
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
-                        // Element kommt in den Viewport -> Animation abspielen
                         entry.target.classList.add('visible');
                     } else {
-                        // Element verlässt den Viewport -> Animation entfernen,
-                        // damit sie beim nächsten Mal wieder startet
                         entry.target.classList.remove('visible');
                     }
                 });
             }, observerOptions);
 
-            animatedElements.forEach(el => {
+            animatedElements.forEach(function(el) {
                 observer.observe(el);
             });
 
-            // Initial: Elemente die schon sichtbar sind sofort animieren
-            setTimeout(() => {
-                animatedElements.forEach(el => {
-                    const rect = el.getBoundingClientRect();
+            setTimeout(function() {
+                animatedElements.forEach(function(el) {
+                    var rect = el.getBoundingClientRect();
                     if (rect.top < window.innerHeight && rect.bottom > 0) {
                         el.classList.add('visible');
                     }
                 });
             }, 100);
 
-            console.log('🔥 RobloxTournaments.github.io — Ready');
-            console.log('   Animations: Fade-Up, Fade-In, Fade-Left, Fade-Right, Scale-In');
-            console.log('   Re-trigger on scroll: Enabled');
-            console.log('   Mobile responsive: Yes');
-            console.log('   Glow effects: Active');
+            var sliderImages = document.querySelectorAll('#screenshotSlider img');
+            var currentSlide = 0;
+            var totalSlides = sliderImages.length;
+            function showSlide(index) {
+                sliderImages.forEach(function(img, i) {
+                    img.classList.remove('active');
+                    if (i === index) {
+                        img.classList.add('active');
+                    }
+                });
+            }
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                showSlide(currentSlide);
+            }
+            if (totalSlides > 1) {
+                setInterval(nextSlide, 2500);
+            }
+
+            var slider = document.getElementById('screenshotSlider');
+            var overlay = document.getElementById('screenshotOverlay');
+            var overlayImg = document.getElementById('overlayImg');
+            if (slider && overlay && overlayImg) {
+                slider.addEventListener('click', function() {
+                    var activeImg = slider.querySelector('img.active');
+                    if (activeImg) {
+                        overlayImg.src = activeImg.src;
+                        overlay.classList.add('active');
+                    }
+                });
+                overlay.addEventListener('click', function() {
+                    overlay.classList.remove('active');
+                });
+            }
+
+            var footer = document.getElementById('footer');
+            var footerObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { root: null, rootMargin: '0px', threshold: 0.05 });
+            if (footer) {
+                footerObserver.observe(footer);
+            }
+
+            console.log('RobloxTournaments.github.io - Ready');
         })();
     </script>
 
