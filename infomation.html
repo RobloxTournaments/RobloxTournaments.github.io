@@ -39,12 +39,6 @@
             --transition-bounce: 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg);
@@ -57,7 +51,6 @@
             overflow-x: hidden;
         }
 
-        /* Background Bubbles - exact same as index */
         .bg-bubbles {
             position: fixed;
             top: 0;
@@ -82,7 +75,6 @@
             75% { transform: translate(60px, 40px) scale(1.15); opacity: 0.7; }
         }
 
-        /* LAUNCHER WINDOW */
         .launcher {
             position: relative;
             z-index: 10;
@@ -101,7 +93,6 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* Title Bar - exactly like index header style */
         .title-bar {
             display: flex;
             align-items: center;
@@ -143,13 +134,11 @@
         .win-btn:hover { background: rgba(255, 255, 255, 0.12); color: white; }
         .win-btn.close:hover { background: #e81123; color: white; }
 
-        /* Main Layout */
         .launcher-main {
             display: flex;
             min-height: 560px;
         }
 
-        /* Sidebar - with index style */
         .sidebar {
             width: 230px;
             background: rgba(8, 10, 18, 0.6);
@@ -183,7 +172,6 @@
         }
         .nav-item.active svg { opacity: 1; }
 
-        /* Content Area */
         .content-area {
             flex: 1;
             padding: 24px 28px;
@@ -191,7 +179,6 @@
             max-height: 560px;
         }
 
-        /* Status Badge */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -214,7 +201,6 @@
         }
         @keyframes pulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
 
-        /* Main Title */
         .main-title {
             font-size: 32px;
             font-weight: 900;
@@ -232,7 +218,6 @@
             margin-bottom: 28px;
         }
 
-        /* Info Cards */
         .info-cards {
             display: flex;
             gap: 16px;
@@ -262,7 +247,6 @@
         }
         .info-card .subvalue { font-size: 11px; color: #6a6a8a; margin-top: 6px; }
 
-        /* Code Section */
         .code-section {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 16px;
@@ -313,33 +297,6 @@
         }
         .send-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 45, 45, 0.4); }
 
-        /* Capabilities */
-        .capabilities {
-            margin-top: 24px;
-        }
-        .cap-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: #8a8aaa;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .cap-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .cap-item {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #b0b0c8;
-        }
-
-        /* User Bar */
         .user-bar {
             display: flex;
             align-items: center;
@@ -367,10 +324,8 @@
         }
         .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
         .user-name { font-size: 14px; font-weight: 700; color: white; }
-        .user-status { font-size: 11px; color: #3eff6e; }
         .version-tag { font-size: 11px; color: #5a5a7a; font-family: monospace; }
 
-        /* TOURNAMENTS TABLE */
         .tournaments-table {
             width: 100%;
             border-collapse: collapse;
@@ -409,7 +364,6 @@
         }
         .join-btn:hover { background: var(--accent); color: white; }
 
-        /* INVENTORY */
         .inventory-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -429,7 +383,6 @@
         .inventory-name { font-size: 12px; font-weight: 600; color: white; }
         .inventory-value { font-size: 10px; color: var(--gold); margin-top: 4px; }
 
-        /* HISTORY */
         .history-item {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
@@ -461,7 +414,6 @@
 <div class="bg-bubbles" id="bgBubbles"></div>
 
 <div class="launcher">
-    <!-- Title Bar -->
     <div class="title-bar">
         <div class="title-logo">
             <span>Roblox</span><span class="red">Tournaments</span>
@@ -472,9 +424,7 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="launcher-main">
-        <!-- Sidebar Navigation -->
         <div class="sidebar">
             <div class="nav-item active" data-tab="launcher">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -505,13 +455,10 @@
             </div>
         </div>
 
-        <!-- Content Area - Launcher Tab (default) -->
         <div class="content-area" id="contentArea">
-            <!-- Launcher Tab Content -->
             <div id="launcherTab" class="tab-content">
                 <div class="status-badge">
                     <span class="status-dot"></span>
-                    <span>Ready</span>
                 </div>
 
                 <div class="main-title">Rivals Team Cup</div>
@@ -525,12 +472,11 @@
                     </div>
                     <div class="info-card">
                         <div class="label">STATUS</div>
-                        <div class="value">● Online</div>
+                        <div class="value">Online</div>
                         <div class="subvalue">Next cup: Rivals</div>
                     </div>
                 </div>
 
-                <!-- Code Input -->
                 <div class="code-section">
                     <div class="code-label">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5e5e" stroke-width="2">
@@ -544,10 +490,8 @@
                         <button class="send-btn" id="sendBtn">SEND →</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- Capabilities --
-
-            <!-- Tournaments Tab Content (hidden initially) -->
             <div id="tournamentsTab" class="tab-content" style="display: none;">
                 <div class="main-title">Active Tournaments</div>
                 <div class="sub">Join and compete for Robux prizes</div>
@@ -558,13 +502,12 @@
                     </thead>
                     <tbody>
                         <tr><td><strong>Rivals Team Cup</strong></td><td>Rivals</td><td class="prize">2,500 Robux</td><td>9/12</td><td><button class="join-btn">Join</button></td></tr>
-                        <tr><td><strong></strong></td><td>Murder Mystery 2</td><td class="prize">1,800 Robux</td><td>2/24</td><td><button class="join-btn">Join</button></td></tr>
+                        <tr><td><strong>MM2 Champions</strong></td><td>Murder Mystery 2</td><td class="prize">1,800 Robux</td><td>2/24</td><td><button class="join-btn">Join</button></td></tr>
                         <tr><td><strong>Rivals Solo Cup</strong></td><td>Blade Ball</td><td class="prize">2,000 Robux</td><td>8/9</td><td><button class="join-btn">Join</button></td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- Inventory Tab Content -->
             <div id="inventoryTab" class="tab-content" style="display: none;">
                 <div class="main-title">Your Inventory</div>
                 <div class="sub">Tournament rewards & items</div>
@@ -578,32 +521,30 @@
                 </div>
             </div>
 
-            <!-- History Tab Content -->
             <div id="historyTab" class="tab-content" style="display: none;">
                 <div class="main-title">Match History</div>
                 <div class="sub">Your tournament performance</div>
 
                 <div class="history-item">
                     <div><div class="history-tournament">Rivals Winter Cup</div><div class="history-date">March 15, 2026</div></div>
-                    <div class="history-result win">🏆 1st Place • +1,200 Robux</div>
+                    <div class="history-result win">1st Place +1,200 Robux</div>
                 </div>
                 <div class="history-item">
                     <div><div class="history-tournament">MM2 Showdown</div><div class="history-date">March 8, 2026</div></div>
-                    <div class="history-result place">🎯 3rd Place • +800 Robux</div>
+                    <div class="history-result place">3rd Place +800 Robux</div>
                 </div>
                 <div class="history-item">
                     <div><div class="history-tournament">Blade Ball Open</div><div class="history-date">February 28, 2026</div></div>
-                    <div class="history-result place">🎯 Top 8 • +400 Robux</div>
+                    <div class="history-result place">Top 8 +400 Robux</div>
                 </div>
                 <div class="history-item">
                     <div><div class="history-tournament">Rivals Pro League</div><div class="history-date">February 20, 2026</div></div>
-                    <div class="history-result win">🏆 2nd Place • +1,000 Robux</div>
+                    <div class="history-result win">2nd Place +1,000 Robux</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- User Bar -->
     <div class="user-bar">
         <div class="user-info">
             <div class="avatar">
@@ -612,7 +553,6 @@
             </div>
             <div>
                 <div class="user-name">JumJum236</div>
-                <div class="user-status">Verified Roblox account</div>
             </div>
         </div>
         <div class="version-tag">v2.4.3 | Rivals Team Cup</div>
@@ -621,7 +561,6 @@
 
 <script>
     (function() {
-        // Background bubbles
         const bgBubbles = document.getElementById('bgBubbles');
         if (bgBubbles) {
             for (let i = 0; i < 8; i++) {
@@ -638,7 +577,6 @@
             }
         }
 
-        // Window controls
         const launcher = document.querySelector('.launcher');
         const minimizeBtn = document.getElementById('minimizeBtn');
         const closeBtn = document.getElementById('closeBtn');
@@ -669,7 +607,6 @@
             });
         }
 
-        // Tab switching
         const navItems = document.querySelectorAll('.nav-item');
         const tabs = {
             launcher: document.getElementById('launcherTab'),
@@ -683,7 +620,6 @@
                 if (tabs[id]) tabs[id].style.display = 'none';
             });
             if (tabs[tabId]) tabs[tabId].style.display = 'block';
-
             navItems.forEach(item => {
                 item.classList.remove('active');
                 if (item.getAttribute('data-tab') === tabId) {
@@ -699,7 +635,6 @@
             });
         });
 
-        // Send button simulation
         const sendBtn = document.getElementById('sendBtn');
         const codeInput = document.getElementById('licenseCode');
 
@@ -732,18 +667,16 @@
             sendBtn.addEventListener('click', () => {
                 const code = codeInput.value.trim();
                 if (!code) {
-                    showNotification('✕ Please enter a license key', true);
+                    showNotification('Please enter a license key', true);
                     return;
                 }
                 sendBtn.disabled = true;
                 sendBtn.textContent = 'SENDING...';
                 setTimeout(() => {
                     if (code.length >= 5) {
-                        showNotification('✓ License verified! Launcher ready.');
-                        const statusBadge = document.querySelector('.status-badge span:last-child');
-                        if (statusBadge) statusBadge.innerHTML = '● Licensed & Ready';
+                        showNotification('License verified! Launcher ready.');
                     } else {
-                        showNotification('✕ Invalid license key', true);
+                        showNotification('Invalid license key', true);
                     }
                     sendBtn.disabled = false;
                     sendBtn.textContent = 'SEND →';
@@ -757,14 +690,11 @@
             });
         }
 
-        // Join button handlers
         document.querySelectorAll('.join-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                showNotification('✓ Joined tournament! Check back soon for match info.', false);
+                showNotification('Joined tournament! Check back soon for match info.');
             });
         });
-
-        console.log('Rivals Team Cup Launcher - Ready');
     })();
 </script>
 </body>
