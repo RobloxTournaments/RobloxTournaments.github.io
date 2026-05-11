@@ -4,20 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>RbxTournaments Launcher</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none; /* makes it feel more like an application window */
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
-            background: #0a0a14;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0c12;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -26,581 +23,728 @@
             overflow: hidden;
         }
 
-        /* EXACT SAME BUBBLE BACKGROUND AS INDEX.HTML */
-        .bg-bubbles {
+        /* Roblox-style animated background */
+        .bg-gradient {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            background: radial-gradient(ellipse at 30% 40%, #1a1a2e 0%, #0a0c12 100%);
             z-index: 0;
-            overflow: hidden;
         }
-        .bg-bubble {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, rgba(255, 45, 45, 0.07) 0%, transparent 70%);
-            animation: bubbleFloat 18s ease-in-out infinite;
-            filter: blur(40px);
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 45, 45, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 45, 45, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
         }
-        @keyframes bubbleFloat {
+
+        .bg-glow {
+            position: fixed;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle at center, rgba(255, 45, 45, 0.08) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+            animation: slowRotate 30s ease-in-out infinite;
+        }
+
+        @keyframes slowRotate {
             0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-            25% { transform: translate(80px, -60px) scale(1.2); opacity: 0.8; }
-            50% { transform: translate(-40px, -120px) scale(0.9); opacity: 0.4; }
-            75% { transform: translate(60px, 40px) scale(1.15); opacity: 0.7; }
+            50% { transform: translate(3%, 2%) scale(1.05); opacity: 0.7; }
         }
 
-        /* MAIN LAUNCHER CARD (the "fake launcher" window) */
-        .launcher-window {
+        /* MAIN LAUNCHER WINDOW - Professional App Style */
+        .launcher {
             position: relative;
-            z-index: 20;
-            width: 92%;
-            max-width: 520px;
-            background: rgba(18, 18, 31, 0.96);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-radius: 28px;
-            border: 1px solid rgba(255, 45, 45, 0.35);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 45, 45, 0.15), 0 0 40px rgba(255, 45, 45, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: floatWindow 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .launcher-window:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 45, 45, 0.4), 0 0 55px rgba(255, 45, 45, 0.3);
-        }
-        @keyframes floatWindow {
-            0% { opacity: 0; transform: scale(0.92) translateY(25px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+            z-index: 10;
+            width: 900px;
+            max-width: 90vw;
+            background: rgba(18, 20, 28, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 45, 45, 0.15);
+            overflow: hidden;
+            animation: appIn 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
-        /* window header (title bar with fake buttons) */
-        .window-bar {
+        @keyframes appIn {
+            from {
+                opacity: 0;
+                transform: scale(0.96) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Windows 11-style title bar */
+        .title-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(8, 8, 18, 0.5);
-            border-radius: 28px 28px 0 0;
+            padding: 12px 20px;
+            background: rgba(10, 12, 18, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .window-title {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-            font-family: 'Space Grotesk', monospace;
-            font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: -0.3px;
-        }
-        .window-title .logo-red {
-            color: #ff2d2d;
-            text-shadow: 0 0 12px rgba(255, 45, 45, 0.7);
-        }
-        .window-title .normal {
-            color: white;
-        }
-        .fake-buttons {
+
+        .window-controls {
             display: flex;
             gap: 12px;
         }
-        .win-btn {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-        .win-btn.close {
-            background: #ff5f56;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-        .win-btn.minimize {
-            background: #ffbd2e;
-        }
-        .win-btn.maximize {
-            background: #27c93f;
-        }
-        .win-btn:hover {
-            filter: brightness(1.1);
-            transform: scale(1.12);
-            box-shadow: 0 0 8px rgba(255,255,240,0.5);
-        }
 
-        /* main content inside launcher */
-        .launcher-content {
-            padding: 32px 28px 38px;
-            text-align: center;
-        }
-        .launcher-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(145deg, #1e1e30, #12121f);
-            border-radius: 22px;
-            margin: 0 auto 20px;
+        .win-control {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,45,45,0.3);
+            cursor: pointer;
+            transition: all 0.15s;
+            color: #a0a0b0;
+            font-size: 14px;
         }
-        .launcher-icon svg {
-            width: 42px;
-            height: 42px;
-            filter: drop-shadow(0 0 6px rgba(255,45,45,0.5));
+
+        .win-control:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
         }
-        h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #fff, #ffa2a2);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(255,45,45,0.2);
+
+        .win-control.close:hover {
+            background: #e81123;
+            color: white;
         }
-        .info-text {
-            color: #b0b0cc;
-            font-weight: 500;
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-            display: inline-block;
-            padding-bottom: 6px;
-        }
-        .code-area {
-            background: #07070f;
-            border-radius: 28px;
-            padding: 8px 16px;
-            margin: 18px 0 20px;
+
+        .app-icon {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 10px;
-            border: 1px solid rgba(255, 45, 45, 0.35);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.02);
-            transition: all 0.2s;
         }
-        .code-area:focus-within {
-            border-color: #ff5e5e;
-            box-shadow: 0 0 0 3px rgba(255,45,45,0.2), 0 0 20px rgba(255,45,45,0.2);
+
+        .app-icon svg {
+            width: 24px;
+            height: 24px;
         }
-        .code-input {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-family: 'Space Grotesk', monospace;
-            font-size: 1.2rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            width: 100%;
-            outline: none;
-            padding: 12px 5px;
+
+        .app-icon span {
+            font-weight: 700;
+            font-size: 13px;
+            color: #e0e0e8;
+            letter-spacing: -0.3px;
         }
-        .code-input::placeholder {
-            color: #4a4a66;
-            font-weight: 400;
-            font-size: 0.9rem;
-            letter-spacing: normal;
+
+        .app-icon .red {
+            color: #ff3b3b;
         }
-        .send-btn {
-            background: rgba(255, 45, 45, 0.12);
-            border: 1.5px solid #ff2d2d;
-            color: #ff4d4d;
-            font-weight: 800;
-            font-size: 0.85rem;
-            padding: 8px 20px;
-            border-radius: 60px;
+
+        /* MAIN CONTENT - Split layout like real launcher */
+        .launcher-main {
+            display: flex;
+            min-height: 520px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: rgba(8, 10, 16, 0.6);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            margin: 4px 12px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            letter-spacing: 0.5px;
-            backdrop-filter: blur(4px);
-            white-space: nowrap;
+            transition: all 0.15s;
+            color: #a0a0b8;
+            font-size: 13px;
+            font-weight: 500;
         }
-        .send-btn:hover {
-            background: #ff2d2d;
-            color: white;
-            box-shadow: 0 0 20px rgba(255,45,45,0.7);
-            transform: scale(1.02);
+
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
         }
-        .send-btn:active {
-            transform: scale(0.96);
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
         }
-        .fake-status {
-            margin-top: 25px;
-            font-size: 0.75rem;
-            color: #7a7a9a;
-            background: rgba(0,0,0,0.4);
-            padding: 8px 14px;
-            border-radius: 60px;
+
+        .nav-item.active {
+            background: rgba(255, 45, 45, 0.12);
+            color: #ff5e5e;
+        }
+
+        .nav-item.active svg {
+            opacity: 1;
+            color: #ff5e5e;
+        }
+
+        /* Right Content Area */
+        .content-area {
+            flex: 1;
+            padding: 24px 28px;
+        }
+
+        /* Status Badge */
+        .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            backdrop-filter: blur(4px);
+            background: rgba(39, 201, 63, 0.12);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #3eff6e;
+            margin-bottom: 20px;
+            border: 1px solid rgba(62, 255, 110, 0.2);
         }
-        .fake-status .dot {
+
+        .status-dot {
             width: 8px;
             height: 8px;
-            background: #27c93f;
+            background: #3eff6e;
             border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 6px #27c93f;
-            animation: pulseGreen 1.6s infinite;
+            animation: pulse 1.5s infinite;
         }
-        @keyframes pulseGreen {
-            0% { opacity: 0.6; transform: scale(1);}
-            100% { opacity: 1; transform: scale(1.2);}
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
-        .note-text {
-            font-size: 0.68rem;
-            color: #5a5a7a;
-            margin-top: 18px;
+
+        /* Main Title */
+        .main-title {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #ff9e9e 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .sub {
+            color: #7a7a9a;
+            font-size: 13px;
+            margin-bottom: 28px;
+        }
+
+        /* Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-card .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ff5e5e;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .info-card .value {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .info-card .subvalue {
+            font-size: 11px;
+            color: #6a6a8a;
+            margin-top: 6px;
+        }
+
+        /* CODE INPUT AREA */
+        .code-section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 45, 45, 0.2);
+            margin: 20px 0;
+        }
+
+        .code-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #c0c0d8;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .code-input {
+            flex: 1;
+            background: #0c0e14;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-family: 'Inter', monospace;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: white;
+            outline: none;
+            transition: all 0.15s;
+        }
+
+        .code-input:focus {
+            border-color: #ff3b3b;
+            box-shadow: 0 0 0 3px rgba(255, 59, 59, 0.15);
+        }
+
+        .code-input::placeholder {
+            letter-spacing: normal;
+            color: #3a3a50;
             font-weight: 400;
         }
-        /* fallback to match original style */
-        .no-header-footer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            visibility: hidden;
+
+        .inject-btn {
+            background: linear-gradient(135deg, #ff2d2d 0%, #cc0000 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 14px 32px;
+            font-weight: 700;
+            font-size: 14px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(255, 45, 45, 0.3);
         }
-        /* add little glow to match branding */
-        .glow-line {
-            width: 70px;
-            height: 2px;
-            background: #ff2d2d;
-            margin: 6px auto 0;
-            border-radius: 10px;
-            box-shadow: 0 0 8px #ff2d2d;
+
+        .inject-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(255, 45, 45, 0.4);
         }
-        @media (max-width: 550px) {
-            .launcher-content {
-                padding: 24px 20px 30px;
+
+        .inject-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Capabilities list */
+        .capabilities {
+            margin-top: 24px;
+        }
+
+        .cap-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #8a8aaa;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cap-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .cap-item {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #b0b0c8;
+        }
+
+        .cap-item.checked {
+            background: rgba(62, 255, 110, 0.1);
+            color: #3eff6e;
+            border: 1px solid rgba(62, 255, 110, 0.2);
+        }
+
+        /* User info bar at bottom */
+        .user-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background: rgba(8, 10, 16, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #ff2d2d, #8b0000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: white;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-status {
+            font-size: 11px;
+            color: #3eff6e;
+        }
+
+        .version-tag {
+            font-size: 11px;
+            color: #5a5a7a;
+            font-family: monospace;
+        }
+
+        @media (max-width: 700px) {
+            .launcher-main {
+                flex-direction: column;
             }
-            .code-area {
-                flex-wrap: wrap;
-                justify-content: center;
-                border-radius: 32px;
-                padding: 12px;
-            }
-            .send-btn {
+            .sidebar {
                 width: 100%;
-                text-align: center;
+                display: flex;
+                overflow-x: auto;
+                padding: 12px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
             }
-            h2 {
-                font-size: 1.5rem;
+            .nav-item {
+                padding: 8px 16px;
+                margin: 0 4px;
+                white-space: nowrap;
             }
-        }
-        /* subtle background noise like index vibe */
-        body::before {
-            content: '';
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 40%, rgba(255,45,45,0.02) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 1;
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .input-group {
+                flex-direction: column;
+            }
+            .inject-btn {
+                width: 100%;
+            }
+            .content-area {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
 
-    <div class="bg-bubbles" id="bgBubbles"></div>
-
-    <!-- THE FAKE LAUNCHER WINDOW / BOX -->
-    <div class="launcher-window">
-        <div class="window-bar">
-            <div class="window-title">
-                <span class="normal">Roblox</span><span class="logo-red">Tournaments</span>
+    <div class="launcher">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="app-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="4" width="16" height="16" rx="3" stroke="#ff3b3b" stroke-width="1.5" fill="rgba(255,59,59,0.1)"/>
+                    <path d="M8 8L16 16M16 8L8 16" stroke="#ff3b3b" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="12" cy="12" r="2" fill="#ff3b3b"/>
+                </svg>
+                <span>Rbx<span class="red">Tournaments</span></span>
             </div>
-            <div class="fake-buttons">
-                <div class="win-btn minimize" id="fakeMinimizeBtn"></div>
-                <div class="win-btn maximize" id="fakeMaximizeBtn"></div>
-                <div class="win-btn close" id="fakeCloseBtn"></div>
+            <div class="window-controls">
+                <div class="win-control" id="minimizeBtn">─</div>
+                <div class="win-control" id="maximizeBtn">□</div>
+                <div class="win-control close" id="closeBtn">✕</div>
             </div>
         </div>
 
-        <div class="launcher-content">
-            <div class="launcher-icon">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#ff2d2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255,45,45,0.15)"/>
-                    <path d="M2 17L12 22L22 17" stroke="#ff2d2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    <path d="M2 12L12 17L22 12" stroke="#ff2d2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    <circle cx="12" cy="12" r="1.5" fill="#ff2d2d" stroke="none"/>
-                </svg>
+        <!-- Main Content -->
+        <div class="launcher-main">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M3 9L12 3L21 9L12 15L3 9Z" stroke="currentColor" fill="none"/>
+                        <path d="M3 15L12 21L21 15" stroke="currentColor" fill="none"/>
+                        <path d="M3 12L12 18L21 12" stroke="currentColor" fill="none"/>
+                    </svg>
+                    <span>Launcher</span>
+                </div>
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" fill="none"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" fill="none"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" fill="none"/>
+                    </svg>
+                    <span>Tournaments</span>
+                </div>
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20 12V8H4V12M20 12L12 20L4 12M20 12H4" stroke="currentColor" fill="none"/>
+                    </svg>
+                    <span>Inventory</span>
+                </div>
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" fill="none"/>
+                        <path d="M12 8V12L14 14" stroke="currentColor" fill="none"/>
+                    </svg>
+                    <span>History</span>
+                </div>
             </div>
-            <h2>LAUNCHER AUTH</h2>
-            <div class="info-text">🔐 Device verification required</div>
-            <div class="code-area">
-                <input type="text" class="code-input" id="authCodeInput" placeholder="● ● ● ● ● ●" maxlength="12" autocomplete="off">
-                <button class="send-btn" id="sendCodeBtn">✔ SEND CODE</button>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>● Undetected since 2023</span>
+                </div>
+
+                <div class="main-title">Prestige Client</div>
+                <div class="sub">Advanced ghost client optimised for competitive Roblox tournaments</div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="label">VERSIONS</div>
+                        <div class="value">1.21 → 1.21.11</div>
+                        <div class="subvalue">Full cross-version compatibility</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="label">STATUS</div>
+                        <div class="value">● Active</div>
+                        <div class="subvalue">Cloud-synced configs ready</div>
+                    </div>
+                </div>
+
+                <!-- Code Input Section -->
+                <div class="code-section">
+                    <div class="code-label">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5e5e" stroke-width="2">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor"/>
+                            <path d="M2 17L12 22L22 17" stroke="currentColor"/>
+                            <path d="M2 12L12 17L22 12" stroke="currentColor"/>
+                        </svg>
+                        LICENSE VERIFICATION
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="code-input" id="licenseCode" placeholder="XXXXX-XXXXX-XXXXX" autocomplete="off">
+                        <button class="inject-btn" id="injectBtn">INJECT →</button>
+                    </div>
+                </div>
+
+                <!-- Capabilities -->
+                <div class="capabilities">
+                    <div class="cap-title">CAPABILITIES</div>
+                    <div class="cap-grid">
+                        <span class="cap-item checked">✓ Standard injection method</span>
+                        <span class="cap-item checked">✓ Competitive-ready modules</span>
+                        <span class="cap-item checked">✓ Advanced Anti-Cheat bypass</span>
+                        <span class="cap-item checked">✓ Stringless</span>
+                        <span class="cap-item checked">✓ Screenshare-bypass capabilities</span>
+                        <span class="cap-item checked">✓ Cloud config system</span>
+                    </div>
+                </div>
             </div>
-            <div class="fake-status">
-                <span class="dot"></span>
-                <span id="statusMessage">Ready to connect</span>
+        </div>
+
+        <!-- User Bar -->
+        <div class="user-bar">
+            <div class="user-info">
+                <div class="avatar">N</div>
+                <div>
+                    <div class="user-name">Nexohhh</div>
+                    <div class="user-status">● Subscription active</div>
+                </div>
             </div>
-            <div class="glow-line"></div>
-            <div class="note-text">
-                ⚡ Simulated launcher | No backend required
-            </div>
+            <div class="version-tag">v2.4.3 | build 0426</div>
         </div>
     </div>
 
     <script>
         (function() {
-            // Recreate floating background bubbles exactly like index.html
-            const bgContainer = document.getElementById('bgBubbles');
-            if (bgContainer) {
-                for (let i = 0; i < 8; i++) {
-                    const bubble = document.createElement('div');
-                    bubble.classList.add('bg-bubble');
-                    const size = Math.random() * 380 + 180;
-                    bubble.style.width = size + 'px';
-                    bubble.style.height = size + 'px';
-                    bubble.style.left = Math.random() * 90 + '%';
-                    bubble.style.top = Math.random() * 90 + '%';
-                    bubble.style.animationDelay = Math.random() * 18 + 's';
-                    bubble.style.animationDuration = Math.random() * 24 + 12 + 's';
-                    bgContainer.appendChild(bubble);
-                }
+            // Window controls (fake animations)
+            const launcher = document.querySelector('.launcher');
+            const minimizeBtn = document.getElementById('minimizeBtn');
+            const maximizeBtn = document.getElementById('maximizeBtn');
+            const closeBtn = document.getElementById('closeBtn');
+            const injectBtn = document.getElementById('injectBtn');
+            const licenseInput = document.getElementById('licenseCode');
+
+            let isMaximized = false;
+            let originalRect = null;
+
+            function animateWindow(transform, opacity, duration = 200) {
+                if (!launcher) return;
+                launcher.style.transition = `all ${duration}ms cubic-bezier(0.2, 0.9, 0.4, 1.1)`;
+                if (transform) launcher.style.transform = transform;
+                if (opacity !== undefined) launcher.style.opacity = opacity;
+                setTimeout(() => {
+                    launcher.style.transition = '';
+                    launcher.style.transform = '';
+                    launcher.style.opacity = '';
+                }, duration + 50);
             }
 
-            // Get elements for fake window interactions
-            const fakeMinimize = document.getElementById('fakeMinimizeBtn');
-            const fakeMaximize = document.getElementById('fakeMaximizeBtn');
-            const fakeClose = document.getElementById('fakeCloseBtn');
-            const launcherWindow = document.querySelector('.launcher-window');
-            const sendBtn = document.getElementById('sendCodeBtn');
-            const codeInput = document.getElementById('authCodeInput');
-            const statusSpan = document.getElementById('statusMessage');
-
-            // fake minimize: shrink animation + transform (just for show)
-            if (fakeMinimize) {
-                fakeMinimize.addEventListener('click', () => {
-                    if (!launcherWindow) return;
-                    launcherWindow.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s';
-                    launcherWindow.style.transform = 'scale(0.92) translateY(12px)';
-                    launcherWindow.style.opacity = '0';
+            if (minimizeBtn) {
+                minimizeBtn.addEventListener('click', () => {
+                    animateWindow('scale(0.95) translateY(15px)', 0, 150);
                     setTimeout(() => {
-                        launcherWindow.style.transform = '';
-                        launcherWindow.style.opacity = '';
-                        launcherWindow.style.transition = '';
-                        // just reset to original state -> restore animation
-                        launcherWindow.style.animation = 'none';
-                        launcherWindow.offsetHeight; // reflow
-                        launcherWindow.style.animation = 'floatWindow 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                        // update status message for fun
-                        statusSpan.innerHTML = 'Window restored ⚡';
-                        setTimeout(() => {
-                            if (statusSpan) statusSpan.innerHTML = 'Ready to connect';
-                        }, 1500);
+                        animateWindow('scale(1) translateY(0)', 1, 200);
+                    }, 180);
+                });
+            }
+
+            if (maximizeBtn) {
+                maximizeBtn.addEventListener('click', () => {
+                    if (!isMaximized) {
+                        originalRect = launcher.getBoundingClientRect();
+                        launcher.style.position = 'fixed';
+                        launcher.style.top = '0';
+                        launcher.style.left = '0';
+                        launcher.style.width = '100%';
+                        launcher.style.height = '100%';
+                        launcher.style.borderRadius = '0';
+                        launcher.style.maxWidth = '100%';
+                        isMaximized = true;
+                    } else {
+                        launcher.style.position = '';
+                        launcher.style.top = '';
+                        launcher.style.left = '';
+                        launcher.style.width = '';
+                        launcher.style.height = '';
+                        launcher.style.borderRadius = '';
+                        launcher.style.maxWidth = '';
+                        isMaximized = false;
+                    }
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    animateWindow('scale(0.92)', 0, 150);
+                    setTimeout(() => {
+                        animateWindow('scale(1)', 1, 200);
                     }, 200);
                 });
             }
 
-            // fake maximize: simulate fullscreen pulse (just visual)
-            if (fakeMaximize) {
-                fakeMaximize.addEventListener('click', () => {
-                    if (!launcherWindow) return;
-                    launcherWindow.style.transition = 'all 0.2s ease';
-                    launcherWindow.style.transform = 'scale(1.02)';
-                    launcherWindow.style.boxShadow = '0 0 0 2px rgba(255,45,45,0.6), 0 35px 80px black';
-                    setTimeout(() => {
-                        launcherWindow.style.transform = '';
-                        launcherWindow.style.boxShadow = '';
-                        statusSpan.innerHTML = 'Maximized view ✨';
-                        setTimeout(() => {
-                            if (statusSpan) statusSpan.innerHTML = 'Ready to connect';
-                        }, 1300);
-                    }, 280);
-                });
-            }
-
-            // fake close: show a "disconnected" effect and reset (no actual page navigation)
-            if (fakeClose) {
-                fakeClose.addEventListener('click', () => {
-                    if (!launcherWindow) return;
-                    launcherWindow.style.transition = 'opacity 0.2s, transform 0.2s';
-                    launcherWindow.style.opacity = '0';
-                    launcherWindow.style.transform = 'scale(0.96)';
-                    statusSpan.innerHTML = 'Session closed • click to relaunch';
-                    // Create a temporary overlay message / after 0.6s restart the window state
-                    const tempMessage = document.createElement('div');
-                    tempMessage.innerText = '⚠️ Launcher session closed — click anywhere to restart';
-                    tempMessage.style.position = 'fixed';
-                    tempMessage.style.bottom = '30px';
-                    tempMessage.style.left = '50%';
-                    tempMessage.style.transform = 'translateX(-50%)';
-                    tempMessage.style.background = '#12121fcc';
-                    tempMessage.style.backdropFilter = 'blur(16px)';
-                    tempMessage.style.padding = '12px 24px';
-                    tempMessage.style.borderRadius = '60px';
-                    tempMessage.style.color = '#ffbaba';
-                    tempMessage.style.fontSize = '0.8rem';
-                    tempMessage.style.fontWeight = '500';
-                    tempMessage.style.border = '1px solid #ff2d2d';
-                    tempMessage.style.zIndex = '999';
-                    tempMessage.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
-                    tempMessage.style.pointerEvents = 'none';
-                    document.body.appendChild(tempMessage);
-                    
-                    const restartHandler = () => {
-                        launcherWindow.style.opacity = '1';
-                        launcherWindow.style.transform = 'scale(1)';
-                        launcherWindow.style.transition = '';
-                        statusSpan.innerHTML = 'Ready to connect';
-                        if (tempMessage && tempMessage.remove) tempMessage.remove();
-                        document.removeEventListener('click', restartHandler);
-                        document.removeEventListener('keydown', restartHandler);
-                    };
-                    setTimeout(() => {
-                        document.addEventListener('click', restartHandler, { once: true });
-                        document.addEventListener('keydown', restartHandler, { once: true });
-                    }, 400);
-                });
-            }
-
-            // send code logic: interactive simulation
-            function simulateCodeVerification(code) {
-                if (!code || code.trim() === "") {
-                    statusSpan.innerHTML = '❌ Please enter a code';
-                    statusSpan.style.color = '#ff8a8a';
-                    setTimeout(() => {
-                        if (statusSpan) {
-                            statusSpan.innerHTML = 'Ready to connect';
-                            statusSpan.style.color = '';
-                        }
-                    }, 1800);
-                    return false;
-                }
-                // pretend to send code
-                statusSpan.innerHTML = '⏳ Sending secure handshake ...';
-                statusSpan.style.color = '#ffb85e';
-                sendBtn.disabled = true;
-                sendBtn.style.opacity = '0.7';
-                sendBtn.innerText = '...';
-                
+            // Inject button simulation
+            function showNotification(message, isError = false) {
+                const notif = document.createElement('div');
+                notif.textContent = message;
+                notif.style.position = 'fixed';
+                notif.style.bottom = '100px';
+                notif.style.left = '50%';
+                notif.style.transform = 'translateX(-50%)';
+                notif.style.background = isError ? 'rgba(232, 17, 35, 0.95)' : 'rgba(39, 201, 63, 0.95)';
+                notif.style.backdropFilter = 'blur(16px)';
+                notif.style.padding = '12px 28px';
+                notif.style.borderRadius = '40px';
+                notif.style.fontSize = '13px';
+                notif.style.fontWeight = '600';
+                notif.style.color = 'white';
+                notif.style.zIndex = '1000';
+                notif.style.fontFamily = "'Inter', sans-serif";
+                notif.style.border = '1px solid rgba(255,255,255,0.2)';
+                notif.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                notif.style.pointerEvents = 'none';
+                document.body.appendChild(notif);
                 setTimeout(() => {
-                    // fake response after delay
-                    const isValid = code.length >= 3; // any non-empty code passes (makes it satisfying)
-                    if (isValid) {
-                        statusSpan.innerHTML = '✅ Code accepted! Launcher unlocked.';
-                        statusSpan.style.color = '#a5f7b0';
-                        // additional little effect: input border glow
-                        const codeArea = document.querySelector('.code-area');
-                        if (codeArea) {
-                            codeArea.style.borderColor = '#3eff6e';
-                            codeArea.style.boxShadow = '0 0 0 2px rgba(62, 255, 110, 0.3)';
-                            setTimeout(() => {
-                                if (codeArea) {
-                                    codeArea.style.borderColor = '';
-                                    codeArea.style.boxShadow = '';
-                                }
-                            }, 1000);
-                        }
-                        // show success message and animate
-                        const successMsg = document.createElement('div');
-                        successMsg.innerText = '✓ Tournament launcher ready • redirecting...';
-                        successMsg.style.position = 'fixed';
-                        successMsg.style.bottom = '20%';
-                        successMsg.style.left = '50%';
-                        successMsg.style.transform = 'translateX(-50%)';
-                        successMsg.style.background = '#101018dd';
-                        successMsg.style.backdropFilter = 'blur(20px)';
-                        successMsg.style.padding = '12px 28px';
-                        successMsg.style.borderRadius = '40px';
-                        successMsg.style.fontSize = '0.85rem';
-                        successMsg.style.fontWeight = '600';
-                        successMsg.style.color = '#fff';
-                        successMsg.style.border = '1px solid #3eff6e';
-                        successMsg.style.zIndex = '1000';
-                        successMsg.style.fontFamily = "'Space Grotesk', monospace";
-                        successMsg.style.pointerEvents = 'none';
-                        document.body.appendChild(successMsg);
-                        setTimeout(() => {
-                            if (successMsg && successMsg.remove) successMsg.remove();
-                        }, 2000);
-                        
-                        setTimeout(() => {
-                            // just reset status & button after fake launch
-                            statusSpan.innerHTML = '🚀 Launcher active • tournament mode';
-                            statusSpan.style.color = '#e0e0ff';
-                            sendBtn.disabled = false;
-                            sendBtn.style.opacity = '1';
-                            sendBtn.innerText = '✔ SEND CODE';
-                            codeInput.value = '';
-                            // make status reset after a little while
-                            setTimeout(() => {
-                                if (statusSpan) {
-                                    statusSpan.innerHTML = 'Ready to connect';
-                                    statusSpan.style.color = '';
-                                }
-                            }, 2800);
-                        }, 1200);
-                    } else {
-                        statusSpan.innerHTML = '⚠️ Invalid verification code';
-                        statusSpan.style.color = '#ff7b72';
-                        sendBtn.disabled = false;
-                        sendBtn.style.opacity = '1';
-                        sendBtn.innerText = '✔ SEND CODE';
-                        setTimeout(() => {
-                            if (statusSpan) {
-                                statusSpan.innerHTML = 'Ready to connect';
-                                statusSpan.style.color = '';
-                            }
-                        }, 1700);
+                    notif.style.opacity = '0';
+                    notif.style.transition = 'opacity 0.3s';
+                    setTimeout(() => notif.remove(), 350);
+                }, 2500);
+            }
+
+            if (injectBtn) {
+                injectBtn.addEventListener('click', () => {
+                    const code = licenseInput.value.trim();
+                    if (!code) {
+                        showNotification('✕ Please enter a license key', true);
+                        return;
                     }
-                }, 800);
-                return true;
+                    
+                    injectBtn.disabled = true;
+                    injectBtn.textContent = 'INJECTING...';
+                    injectBtn.style.opacity = '0.7';
+                    
+                    setTimeout(() => {
+                        if (code.length >= 8) {
+                            showNotification('✓ Injection successful! Launcher ready.');
+                            const statusBadge = document.querySelector('.status-badge');
+                            if (statusBadge) {
+                                statusBadge.style.background = 'rgba(62, 255, 110, 0.2)';
+                                statusBadge.style.borderColor = 'rgba(62, 255, 110, 0.4)';
+                            }
+                        } else {
+                            showNotification('✕ Invalid license key', true);
+                        }
+                        injectBtn.disabled = false;
+                        injectBtn.textContent = 'INJECT →';
+                        injectBtn.style.opacity = '1';
+                    }, 1200);
+                });
             }
 
-            function handleSendCode() {
-                const code = codeInput.value.trim();
-                simulateCodeVerification(code);
-            }
-
-            if (sendBtn) {
-                sendBtn.addEventListener('click', handleSendCode);
-            }
-            if (codeInput) {
-                codeInput.addEventListener('keypress', (e) => {
+            if (licenseInput) {
+                licenseInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
                         e.preventDefault();
-                        handleSendCode();
+                        injectBtn.click();
                     }
-                });
-                // subtle focus effect
-                codeInput.addEventListener('focus', () => {
-                    const parent = codeInput.closest('.code-area');
-                    if (parent) parent.style.borderColor = '#ff5e5e';
-                });
-                codeInput.addEventListener('blur', () => {
-                    const parent = codeInput.closest('.code-area');
-                    if (parent) parent.style.borderColor = 'rgba(255, 45, 45, 0.35)';
                 });
             }
 
-            // optional: random placeholder effect
-            const placeholders = ['XXXXXX', 'LAUNCH-CODE', 'RBX-TOURNEY', 'ENTER KEY'];
-            let idx = 0;
-            if (codeInput) {
-                setInterval(() => {
-                    if (document.activeElement !== codeInput && codeInput.value === '') {
-                        codeInput.placeholder = placeholders[idx % placeholders.length];
-                        idx++;
-                    }
-                }, 2800);
-                codeInput.placeholder = 'XXXXXX';
-            }
-
-            // make sure that no header/footer or extra navigation appears, we already have a clean body
-            // background bubbles fully match index vibe.
-            console.log('FAKE LAUNCHER PAGE | inspired by RbxTournaments');
+            // Navigation highlight simulation
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    showNotification('Feature coming in next update', false);
+                });
+            });
         })();
     </script>
 </body>
